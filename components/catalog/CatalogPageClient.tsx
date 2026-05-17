@@ -9,7 +9,13 @@ import { StorefrontChrome } from '@/components/layout/StorefrontChrome';
 import { featuredToCartItem } from '@/lib/cart/helpers';
 import { useCartStore } from '@/lib/cart/store';
 import { useCartUIStore } from '@/lib/cart/ui-store';
-import { buildProductsHref, catalogHref, CATALOG_SORT_OPTIONS, type CatalogSort } from '@/lib/data/navigation';
+import {
+  buildProductsHref,
+  catalogHref,
+  CATALOG_SORT_OPTIONS,
+  liveCatalogHref,
+  type CatalogSort,
+} from '@/lib/data/navigation';
 import type { CatalogResult } from '@/lib/data/catalog';
 
 type Props = {
@@ -82,7 +88,7 @@ export function CatalogPageClient({ catalog, categories, activeCategory, search,
           </div>
 
           <div className="mt-8 flex flex-col gap-4 border-t border-white/5 pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <form method="get" action={catalogHref('/products')} className="flex max-w-md flex-1 gap-2">
+            <form method="get" action={liveCatalogHref('/products')} className="flex max-w-md flex-1 gap-2">
               {activeCategory ? <input type="hidden" name="category" value={activeCategory} /> : null}
               {sort !== 'newest' ? <input type="hidden" name="sort" value={sort} /> : null}
               <input
@@ -100,7 +106,7 @@ export function CatalogPageClient({ catalog, categories, activeCategory, search,
               </button>
             </form>
 
-            <form method="get" action={catalogHref('/products')} className="flex items-center gap-2">
+            <form method="get" action={liveCatalogHref('/products')} className="flex items-center gap-2">
               {activeCategory ? <input type="hidden" name="category" value={activeCategory} /> : null}
               {search ? <input type="hidden" name="search" value={search} /> : null}
               <label htmlFor="catalog-sort" className="sr-only">

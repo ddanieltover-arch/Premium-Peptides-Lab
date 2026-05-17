@@ -58,9 +58,9 @@ export const TESTIMONIALS = [
   },
 ] as const;
 
-import { getSiteUrl, SITE_EMAIL } from '@/lib/seo/site';
+import { getPublicSiteUrl, SITE_EMAIL } from '@/lib/seo/site';
 
 export const SITE_LINKS = {
-  catalog: getSiteUrl(),
+  catalog: getPublicSiteUrl(),
   email: SITE_EMAIL,
 } as const;

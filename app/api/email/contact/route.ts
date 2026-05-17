@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { isSmtpConfigured, sendAdminNotification, sendTransactionalEmail } from '@/lib/email/send';
+import { isEmailConfigured, sendAdminNotification, sendTransactionalEmail } from '@/lib/email/send';
 import { templateContactAdmin, templateContactAutoReplyCustomer } from '@/lib/email/templates';
 
 const MAX_LEN = 8000;
@@ -31,12 +31,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 });
     }
 
-    if (!isSmtpConfigured()) {
+    if (!isEmailConfigured()) {
       return NextResponse.json(
         {
           error:
-            'Email is not configured on this server. Add SMTP_HOST, SMTP_USER, and SMTP_PASS to your environment, or use the mailto link on the contact page.',
-          code: 'missing_smtp',
+            'Email is not configured on this server. Add RESEND_API_KEY (and EMAIL_FROM on your verified domain) to your environment.',
+          code: 'missing_email',
         },
         { status: 503 },
       );
@@ -67,10 +67,10 @@ export async function POST(request: Request) {
     ]);
 
     if (!toAdmin.ok && toAdmin.skipped) {
-      return NextResponse.json({ error: 'Email delivery is unavailable.', code: 'missing_smtp' }, { status: 503 });
+      return NextResponse.json({ error: 'Email delivery is unavailable.', code: 'missing_email' }, { status: 503 });
     }
     if (!toCustomer.ok && 'skipped' in toCustomer && toCustomer.skipped) {
-      return NextResponse.json({ error: 'Email delivery is unavailable.', code: 'missing_smtp' }, { status: 503 });
+      return NextResponse.json({ error: 'Email delivery is unavailable.', code: 'missing_email' }, { status: 503 });
     }
 
     return NextResponse.json({

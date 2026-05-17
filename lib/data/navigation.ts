@@ -1,6 +1,13 @@
-/** Storefront paths (same-origin; works on localhost and production). */
+import { publicSiteHref } from '@/lib/seo/site';
+
+/** In-app relative path (same-origin navigation within the current deployment). */
 export function catalogHref(path: string): string {
   return path.startsWith('/') ? path : `/${path}`;
+}
+
+/** Absolute URL on the live storefront — use for form actions and shared links. */
+export function liveCatalogHref(path: string): string {
+  return publicSiteHref(catalogHref(path));
 }
 
 export const CATALOG_SORT_OPTIONS = [

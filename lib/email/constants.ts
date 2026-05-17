@@ -1,16 +1,25 @@
-import { SITE_EMAIL, SITE_NAME, getSiteUrl } from '@/lib/seo/site';
+import { SITE_EMAIL, SITE_NAME, getPublicSiteUrl, publicSiteHref } from '@/lib/seo/site';
 
 /** Operational inbox for contact and order alerts. */
 export const ADMIN_NOTIFICATION_EMAIL = process.env.ADMIN_EMAIL?.trim() || SITE_EMAIL;
 
+/** Storefront origin for links in transactional email (always the live site). */
 export function siteOrigin(): string {
-  return getSiteUrl();
+  return getPublicSiteUrl();
 }
 
+/** @deprecated Alias for siteOrigin */
+export function emailPublicOrigin(): string {
+  return siteOrigin();
+}
+
+export function absoluteUrl(path: string): string {
+  return publicSiteHref(path);
+}
+
+/** Resend `from` — must use a domain verified in your Resend dashboard. */
 export function emailFrom(): string {
-  const explicit = process.env.EMAIL_FROM?.trim();
+  const explicit = process.env.EMAIL_FROM?.trim() || process.env.RESEND_FROM?.trim();
   if (explicit) return explicit;
-  const user = process.env.SMTP_USER?.trim();
-  if (user) return `${SITE_NAME} <${user}>`;
   return `${SITE_NAME} <${SITE_EMAIL}>`;
 }

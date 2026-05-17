@@ -1,4 +1,7 @@
-const DEFAULT_SITE_URL = 'https://premiumpeptideslab.online';
+/** Production storefront — use for customer-facing links in forms and emails. */
+export const LIVE_SITE_URL = 'https://premiumpeptideslab.online';
+
+const DEFAULT_SITE_URL = LIVE_SITE_URL;
 
 export const SITE_NAME = 'Premium Peptides Lab';
 
@@ -11,6 +14,25 @@ export const SITE_EMAIL = 'info@premiumpeptideslab.online';
 export function getSiteUrl(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL;
   return raw.replace(/\/$/, '');
+}
+
+/**
+ * Live storefront origin for links in forms, emails, and shared UI.
+ * Never returns localhost so buttons always reach the public site.
+ */
+export function getPublicSiteUrl(): string {
+  const explicit = process.env.EMAIL_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, '');
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (fromEnv && !/localhost|127\.0\.0\.1|0\.0\.0\.0/i.test(fromEnv)) {
+    return fromEnv.replace(/\/$/, '');
+  }
+  return LIVE_SITE_URL;
+}
+
+/** Absolute URL on the live storefront (forms, emails, external CTAs). */
+export function publicSiteHref(path: string): string {
+  return absoluteUrl(path, getPublicSiteUrl());
 }
 
 export function absoluteUrl(path: string, siteUrl = getSiteUrl()): string {

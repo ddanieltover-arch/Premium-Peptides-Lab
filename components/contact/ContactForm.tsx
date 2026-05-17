@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { CONTACT_SUBJECTS } from '@/lib/data/contact';
-import { SITE_EMAIL } from '@/lib/seo/site';
+import { LIVE_SITE_URL, SITE_EMAIL } from '@/lib/seo/site';
 
 const inputClass =
   'w-full rounded-xl border border-white/10 bg-lab-base/80 px-4 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-lab-primary/50';
@@ -61,7 +61,7 @@ export function ContactForm() {
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string; code?: string };
 
-      if (res.status === 503 && data.code === 'missing_smtp') {
+      if (res.status === 503 && (data.code === 'missing_email' || data.code === 'missing_smtp')) {
         window.location.href = buildMailtoUrl({
           name: payload.name,
           email: payload.email,
@@ -98,7 +98,7 @@ export function ContactForm() {
         <p className="mt-2 text-sm text-slate-400">
           {usedMailtoFallback ? (
             <>
-              SMTP is not configured on this server, so we opened your mail app instead. You can also write to{' '}
+              Resend is not configured on this server, so we opened your mail app instead. You can also write to{' '}
               <a href={`mailto:${SITE_EMAIL}`} className="text-lab-primary hover:text-white">
                 {SITE_EMAIL}
               </a>
@@ -107,7 +107,11 @@ export function ContactForm() {
           ) : (
             <>
               Thanks — we’ve notified our team and sent a confirmation to your inbox. We typically reply within one
-              business day.
+              business day. Visit{' '}
+              <a href={LIVE_SITE_URL} className="text-lab-primary hover:text-white">
+                premiumpeptideslab.online
+              </a>{' '}
+              for catalog and order updates.
             </>
           )}
         </p>

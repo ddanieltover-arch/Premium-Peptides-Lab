@@ -94,14 +94,18 @@ export function CheckoutPageClient({ categories }: Props) {
       const order = (data as { order?: { id: string; orderNumber: string } }).order;
       if (!order?.id) throw new Error('Invalid checkout response.');
 
+      const confirmationEmail = (data as { confirmationEmail?: { ok?: boolean } }).confirmationEmail;
+      const emailFailed = confirmationEmail?.ok === false;
+
       clearCart();
       try {
         sessionStorage.setItem(`ppl_order_email:${order.id}`, formData.email.trim());
       } catch {
         /* ignore */
       }
+      const emailQuery = emailFailed ? '&emailFailed=1' : '';
       router.push(
-        `/checkout/success?orderId=${encodeURIComponent(order.id)}&orderNumber=${encodeURIComponent(order.orderNumber)}`,
+        `/checkout/success?orderId=${encodeURIComponent(order.id)}&orderNumber=${encodeURIComponent(order.orderNumber)}${emailQuery}`,
       );
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Checkout failed.');

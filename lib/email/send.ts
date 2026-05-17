@@ -1,61 +1,44 @@
-import nodemailer from 'nodemailer';
-import type SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { Resend } from 'resend';
 import { ADMIN_NOTIFICATION_EMAIL, emailFrom } from './constants';
+import { getEmailLogoAttachment } from './logo';
 
 export type SendResult =
   | { ok: true; id?: string }
   | { ok: false; skipped: true; reason: string };
 
-function getSmtpConfig() {
-  const host = process.env.SMTP_HOST?.trim();
-  const portRaw = process.env.SMTP_PORT?.trim();
-  const port = portRaw ? Number(portRaw) : 465;
-  const user = process.env.SMTP_USER?.trim();
-  const pass = process.env.SMTP_PASS?.trim().replace(/\r$/, '').replace(/^\uFEFF/, '');
-  return { host, port, user, pass };
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!apiKey) return null;
+  return new Resend(apiKey);
 }
 
-export function isSmtpConfigured(): boolean {
-  const { host, user, pass } = getSmtpConfig();
-  return Boolean(host && user && pass);
+export function isEmailConfigured(): boolean {
+  return Boolean(process.env.RESEND_API_KEY?.trim());
 }
 
-function smtpTransportOptions(
-  host: string,
-  port: number,
-  secure: boolean,
-  user: string,
-  pass: string,
-): SMTPTransport.Options {
-  const base: SMTPTransport.Options = {
-    host,
-    port,
-    secure,
-    auth: { user, pass },
-    connectionTimeout: 25_000,
-    greetingTimeout: 15_000,
-  };
-  if (port === 587) {
-    return { ...base, secure: false, requireTLS: true };
-  }
-  return base;
+/** @deprecated Use isEmailConfigured */
+export const isSmtpConfigured = isEmailConfigured;
+
+function normalizeRecipients(to: string | string[]): string[] {
+  const list = Array.isArray(to) ? to : [to];
+  return list.map((addr) => addr.trim()).filter(Boolean);
 }
 
-function mapSmtpErrorForClient(err: unknown): Error {
-  const any = err as { message?: string; responseCode?: number; code?: string };
-  const msg = String(any?.message || err);
-  const code =
-    any?.responseCode ?? (typeof any?.code === 'string' && /^\d+$/.test(any.code) ? Number(any.code) : undefined);
+function mapResendError(err: unknown): Error {
+  const msg =
+    err && typeof err === 'object' && 'message' in err
+      ? String((err as { message: string }).message)
+      : err instanceof Error
+        ? err.message
+        : String(err);
 
-  if (code === 535 || /535|invalid login|authentication failed|bad credentials|535-/i.test(msg)) {
+  if (/invalid.*from|domain.*not verified|not authorized/i.test(msg)) {
     return new Error(
-      'Our mail server rejected the login (SMTP). Verify SMTP_USER and SMTP_PASS in the deployment environment, or try port 587 with STARTTLS.',
+      'The sender address is not verified in Resend. Set EMAIL_FROM to an address on your verified domain.',
     );
   }
-  if (code === 534 || /certificate|TLS|SSL/i.test(msg)) {
-    return new Error(
-      'A secure connection to the mail server failed. Check SMTP_PORT and SMTP_SECURE (465 vs 587) for your provider.',
-    );
+  if (/api key|unauthorized|401/i.test(msg)) {
+    return new Error('Resend API key is missing or invalid. Check RESEND_API_KEY in your environment.');
   }
   return err instanceof Error ? err : new Error(msg);
 }
@@ -66,31 +49,36 @@ export async function sendTransactionalEmail(opts: {
   html: string;
   replyTo?: string;
 }): Promise<SendResult> {
-  const { host, port, user, pass } = getSmtpConfig();
-  if (!host || !user || !pass) {
-    console.warn('[email] SMTP_HOST / SMTP_USER / SMTP_PASS not set — email skipped');
-    return { ok: false, skipped: true, reason: 'missing_smtp' };
+  const resend = getResendClient();
+  if (!resend) {
+    console.warn('[email] RESEND_API_KEY not set — email skipped');
+    return { ok: false, skipped: true, reason: 'missing_resend' };
   }
 
-  const secure =
-    port === 587
-      ? false
-      : process.env.SMTP_SECURE !== 'false' && (port === 465 || process.env.SMTP_SECURE === 'true');
-
-  const transporter = nodemailer.createTransport(smtpTransportOptions(host, port, secure, user, pass));
+  const to = normalizeRecipients(opts.to);
+  if (to.length === 0) {
+    return { ok: false, skipped: true, reason: 'no_recipients' };
+  }
 
   try {
-    const info = await transporter.sendMail({
+    const { data, error } = await resend.emails.send({
       from: emailFrom(),
-      to: opts.to,
+      to,
       subject: opts.subject,
       html: opts.html,
+      attachments: [getEmailLogoAttachment()],
       ...(opts.replyTo ? { replyTo: opts.replyTo } : {}),
     });
-    return { ok: true, id: info.messageId };
+
+    if (error) {
+      console.error('[email] Resend error:', error);
+      throw mapResendError(error);
+    }
+
+    return { ok: true, id: data?.id };
   } catch (err) {
-    console.error('[email] sendMail failed:', err);
-    throw mapSmtpErrorForClient(err);
+    console.error('[email] send failed:', err);
+    throw mapResendError(err);
   }
 }
 

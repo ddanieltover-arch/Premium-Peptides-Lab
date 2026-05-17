@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { CheckoutError, createCheckoutOrder } from '@/lib/checkout/createCheckoutOrder';
+import { dispatchOrderConfirmationFromCheckout } from '@/lib/email/orderConfirmation';
 import { createServiceRoleClient } from '@/lib/supabase/admin';
 
 export const dynamic = 'force-dynamic';
@@ -27,7 +28,24 @@ export async function POST(req: Request) {
 
   try {
     const result = await createCheckoutOrder(admin, body);
-    return NextResponse.json(result);
+
+    let confirmationEmail: Awaited<ReturnType<typeof dispatchOrderConfirmationFromCheckout>> | null =
+      null;
+    try {
+      confirmationEmail = await dispatchOrderConfirmationFromCheckout(result.order);
+      if (confirmationEmail && !confirmationEmail.ok) {
+        console.error('[checkout] order confirmation email not sent:', confirmationEmail);
+      }
+    } catch (mailErr) {
+      console.error('[checkout] order confirmation email failed', mailErr);
+      confirmationEmail = {
+        ok: false,
+        status: 500,
+        error: mailErr instanceof Error ? mailErr.message : 'Email failed',
+      };
+    }
+
+    return NextResponse.json({ ...result, confirmationEmail });
   } catch (e) {
     if (e instanceof CheckoutError) {
       return NextResponse.json({ error: e.message, code: e.code }, { status: e.status });
