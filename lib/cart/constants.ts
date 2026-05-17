@@ -1,0 +1,3 @@
+export const FREE_SHIPPING_THRESHOLD = 400;
+export const STANDARD_SHIPPING_COST = 25;
+export const EXPRESS_SHIPPING_COST = 50;

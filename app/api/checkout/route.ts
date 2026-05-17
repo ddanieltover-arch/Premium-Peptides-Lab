@@ -1,0 +1,41 @@
+import { NextResponse } from 'next/server';
+import { CheckoutError, createCheckoutOrder } from '@/lib/checkout/createCheckoutOrder';
+import { createServiceRoleClient } from '@/lib/supabase/admin';
+
+export const dynamic = 'force-dynamic';
+
+export async function POST(req: Request) {
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body.', code: 'bad_json' }, { status: 400 });
+  }
+
+  let admin;
+  try {
+    admin = createServiceRoleClient();
+  } catch {
+    return NextResponse.json(
+      {
+        error: 'Checkout is not configured (missing Supabase service role). Contact support.',
+        code: 'missing_service_role',
+      },
+      { status: 503 },
+    );
+  }
+
+  try {
+    const result = await createCheckoutOrder(admin, body);
+    return NextResponse.json(result);
+  } catch (e) {
+    if (e instanceof CheckoutError) {
+      return NextResponse.json({ error: e.message, code: e.code }, { status: e.status });
+    }
+    console.error('[checkout]', e);
+    return NextResponse.json(
+      { error: 'Something went wrong. Please try again.', code: 'internal' },
+      { status: 500 },
+    );
+  }
+}

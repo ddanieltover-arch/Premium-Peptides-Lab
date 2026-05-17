@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# build
+/.next/
+/out/
+
+# env
+.env*
+!.env.example
+
+# debug / editors
+npm-debug.log*
+.DS_Store
+
+# typescript
+*.tsbuildinfo
+
+# credentials (workspace convention)
+credentials.json
+token.json
