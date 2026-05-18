@@ -396,7 +396,30 @@ export async function getCatalogPriceBounds(categorySlug?: string): Promise<Cata
   return { min, max: max > min ? max : min + 1 };
 }
 
-/** Active product slugs for `app/sitemap.ts`. */
+/** All active products for Google Merchant / external XML feeds. Paginates past Supabase row limits. */
+export async function getAllActiveProductsForFeed(): Promise<ProductDetail[]> {
+  const supabase = await createClient();
+  const chunk = 500;
+  const all: ProductDetail[] = [];
+
+  for (let from = 0; ; from += chunk) {
+    const { data, error } = await supabase
+      .from('products')
+      .select(PRODUCT_DETAIL_SELECT)
+      .eq('is_active', true)
+      .order('name', { ascending: true })
+      .range(from, from + chunk - 1);
+
+    if (error) throw new Error(error.message);
+    const rows = data ?? [];
+    if (rows.length === 0) break;
+    all.push(...rows.map((row) => mapProductDetail(row as DetailRow)));
+    if (rows.length < chunk) break;
+  }
+
+  return all;
+}
+
 export async function getSitemapProductSlugs(): Promise<string[]> {
   const supabase = await createClient();
   const { data, error } = await supabase.from('products').select('slug').eq('is_active', true);

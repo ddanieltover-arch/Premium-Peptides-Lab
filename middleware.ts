@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getAdminAppOrigin } from '@/lib/admin/config';
+import { getAdminAppOrigin, isSameSiteOrigin } from '@/lib/admin/config';
 import { updateSession } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
   const adminOrigin = getAdminAppOrigin();
   const { pathname, search } = request.nextUrl;
 
-  if (adminOrigin && pathname.startsWith('/admin')) {
+  if (
+    adminOrigin &&
+    pathname.startsWith('/admin') &&
+    !isSameSiteOrigin(request.nextUrl.origin, adminOrigin)
+  ) {
     const target = new URL(`${pathname}${search}`, adminOrigin);
     return NextResponse.redirect(target);
   }

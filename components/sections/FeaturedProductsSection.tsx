@@ -28,7 +28,7 @@ export function FeaturedProductsSection({ products, added, onAddToCart }: Props)
             Live catalog from your Supabase database — featured and recent active products.
           </p>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 xl:grid-cols-4">
           {products.length === 0 ? (
             <p className="col-span-full text-center text-sm text-slate-500">No active products in catalog.</p>
           ) : (
