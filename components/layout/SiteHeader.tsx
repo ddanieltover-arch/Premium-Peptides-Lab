@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { formatPriceRange } from '@/lib/pricing';
 import type { CategoryWithCount, FeaturedProduct } from '@/lib/types/catalog';
 import { SITE_LINKS } from '@/lib/data/home-content';
-import { buildProductsHref } from '@/lib/data/navigation';
+import { buildCategoryHref, buildProductsHref, catalogHref } from '@/lib/data/navigation';
 
 type Props = {
   scrolled: boolean;
@@ -17,6 +17,7 @@ type Props = {
   searchOpen: boolean;
   setSearchOpen: (v: boolean | ((s: boolean) => boolean)) => void;
   cartCount: number;
+  wishlistCount: number;
   onCartClick: () => void;
   onMobileOpen: () => void;
   categories: CategoryWithCount[];
@@ -30,6 +31,7 @@ export function SiteHeader({
   searchOpen,
   setSearchOpen,
   cartCount,
+  wishlistCount,
   onCartClick,
   onMobileOpen,
   categories,
@@ -63,8 +65,8 @@ export function SiteHeader({
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled ? 'border-b border-white/10 bg-lab-base/75 shadow-card backdrop-blur-xl' : 'bg-transparent'
+      className={`relative transition-colors duration-300 ${
+        scrolled ? 'border-b border-white/10 bg-lab-base/90 shadow-card backdrop-blur-xl' : 'bg-lab-base/40 backdrop-blur-sm'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:py-4">
@@ -120,7 +122,7 @@ export function SiteHeader({
                             {col.map((cat) => (
                               <li key={cat.id}>
                                 <Link
-                                  href={`${base}/products?category=${cat.slug}`}
+                                  href={buildCategoryHref(cat.slug)}
                                   className="group flex items-center justify-between rounded-lg px-2 py-1.5 transition hover:bg-white/5"
                                 >
                                   <span>{cat.name}</span>
@@ -179,13 +181,33 @@ export function SiteHeader({
           <button
             type="button"
             onClick={() => setSearchOpen((s) => !s)}
-            className="hidden rounded-full border border-white/10 bg-white/5 p-2.5 text-slate-200 backdrop-blur-sm transition hover:border-lab-primary/40 hover:text-white sm:inline-flex"
+            className="hidden rounded-full border border-white/10 bg-white/5 p-2.5 text-slate-200 backdrop-blur-sm transition hover:border-lab-primary/40 hover:text-white lg:inline-flex"
             aria-label="Search"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeWidth={1.8} d="M21 21l-4.35-4.35M10 18a8 8 0 110-16 8 8 0 010 16z" />
             </svg>
           </button>
+          <Link
+            href={catalogHref('/account')}
+            className="hidden items-center rounded-full bg-spectrum px-4 py-2 font-display text-sm font-semibold text-lab-base shadow-glow transition hover:opacity-90 lg:inline-flex"
+          >
+            Sign up
+          </Link>
+          <Link
+            href={catalogHref('/wishlist')}
+            className="relative hidden rounded-full border border-white/10 bg-white/5 p-2.5 text-slate-200 transition hover:border-lab-rose/40 hover:text-lab-rose sm:inline-flex"
+            aria-label="Wishlist"
+          >
+            <span className="text-base leading-none" aria-hidden>
+              ♡
+            </span>
+            {wishlistCount > 0 ? (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-lab-rose px-1 text-[10px] font-bold text-white">
+                {wishlistCount > 9 ? '9+' : wishlistCount}
+              </span>
+            ) : null}
+          </Link>
           <motion.button
             type="button"
             whileTap={{ scale: 0.96 }}

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { CheckoutError, createCheckoutOrder } from '@/lib/checkout/createCheckoutOrder';
+import { getStoreSettings } from '@/lib/data/store-settings';
 import { dispatchOrderConfirmationFromCheckout } from '@/lib/email/orderConfirmation';
 import { createServiceRoleClient } from '@/lib/supabase/admin';
 
@@ -27,12 +28,16 @@ export async function POST(req: Request) {
   }
 
   try {
-    const result = await createCheckoutOrder(admin, body);
+    const storeSettings = await getStoreSettings();
+    const enabledPayments = new Set(storeSettings.payments.enabledMethods);
+    const result = await createCheckoutOrder(admin, body, enabledPayments);
 
     let confirmationEmail: Awaited<ReturnType<typeof dispatchOrderConfirmationFromCheckout>> | null =
       null;
     try {
-      confirmationEmail = await dispatchOrderConfirmationFromCheckout(result.order);
+      if (storeSettings.notifications.orderConfirmationEmail) {
+        confirmationEmail = await dispatchOrderConfirmationFromCheckout(result.order);
+      }
       if (confirmationEmail && !confirmationEmail.ok) {
         console.error('[checkout] order confirmation email not sent:', confirmationEmail);
       }

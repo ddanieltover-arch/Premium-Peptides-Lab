@@ -152,3 +152,43 @@ body {
     border: 1px solid var(--lab-border);
   }
 }
+
+/*
+ * Smartsupp live chat — left side, above mobile bottom nav (see SmartsuppChat offsetY).
+ */
+#smartsupp-widget-container,
+div[id^='smartsupp-widget'],
+iframe[id*='smartsupp'],
+iframe[src*='smartsupp'] {
+  left: 1rem !important;
+  right: auto !important;
+}
+
+@media (max-width: 1023px) {
+  #smartsupp-widget-container,
+  div[id^='smartsupp-widget'],
+  iframe[id*='smartsupp'],
+  iframe[src*='smartsupp'] {
+    bottom: calc(4.75rem + 1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  #smartsupp-widget-container,
+  div[id^='smartsupp-widget'] {
+    bottom: 1.5rem !important;
+  }
+}
+
+#smartsupp-widget-container .widget-button,
+#smartsupp-widget-container .widget-launcher,
+#smartsupp-widget-container [class*='widget-button'] {
+  background: var(--gradient-spectrum) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 28px var(--color-glow-primary) !important;
+}
+
+#smartsupp-widget-container .widget-button svg,
+#smartsupp-widget-container .widget-launcher svg {
+  fill: var(--color-text-inverse) !important;
+}

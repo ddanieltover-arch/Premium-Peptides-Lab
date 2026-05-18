@@ -105,14 +105,25 @@ export function CheckoutSuccessClient({ orderId, orderNumber, emailFailed }: Pro
       )}
 
       <div className="mt-10 flex flex-wrap justify-center gap-3">
-        <Button href={liveCatalogHref('/products')} size="lg">
+        {orderId ? (
+          <Button href={liveCatalogHref(`/orders/${orderId}`)} size="lg">
+            View order
+          </Button>
+        ) : null}
+        <Button href={liveCatalogHref('/products')} variant={orderId ? 'secondary' : undefined} size="lg">
           Continue shopping
         </Button>
         <Link
-          href={liveCatalogHref('/contact')}
+          href={liveCatalogHref('/account')}
           className="inline-flex items-center text-sm text-lab-primary hover:text-white"
         >
-          Contact support →
+          Account & order history →
+        </Link>
+        <Link
+          href={liveCatalogHref('/contact')}
+          className="inline-flex items-center text-sm text-slate-400 hover:text-white"
+        >
+          Contact support
         </Link>
       </div>
     </main>

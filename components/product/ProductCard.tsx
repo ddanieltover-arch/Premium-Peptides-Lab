@@ -17,6 +17,8 @@ import {
 } from '@/lib/motion';
 import { formatPriceRange } from '@/lib/pricing';
 import type { FeaturedProduct } from '@/lib/types/catalog';
+import { featuredToWishlistItem } from '@/lib/wishlist/helpers';
+import { WishlistButton } from '@/components/wishlist/WishlistButton';
 
 type ProductCardProps = {
   product: FeaturedProduct;
@@ -39,12 +41,12 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
     >
       <Link href={catalogHref(`/products/${product.slug}`)} className="block">
         <motion.div
-          className="relative aspect-[4/3] overflow-hidden"
-          whileHover={reduce ? undefined : { scale: 1.02 }}
+          className="product-card-image relative aspect-square overflow-hidden bg-white"
+          whileHover={reduce ? undefined : { scale: 1.01 }}
           transition={{ duration: 0.35 }}
         >
           <motion.div
-            className="h-full w-full"
+            className="flex h-full w-full items-center justify-center p-3 sm:p-5"
             whileHover={reduce ? undefined : imageZoomHover}
             transition={imageZoomTransition}
           >
@@ -52,18 +54,20 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
             <img
               src={product.image}
               alt={product.name}
-              className="h-full w-full object-cover"
+              className="max-h-full max-w-full object-contain"
               loading="lazy"
               onError={(e) => {
                 const el = e.currentTarget;
                 if (el.src.includes('/brand-logo.png')) return;
+                const frame = el.closest('.product-card-image');
+                frame?.classList.remove('bg-white');
+                frame?.classList.add('bg-lab-elevated/60');
                 el.src = '/brand-logo.png';
               }}
             />
           </motion.div>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-lab-base via-transparent to-transparent opacity-80" />
           <motion.div
-            className="absolute left-3 top-3"
+            className="absolute left-2 top-2 sm:left-3 sm:top-3"
             initial={{ opacity: reduce ? 1 : 0, x: reduce ? 0 : -8 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -71,21 +75,26 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
           >
             <PurityBadge value={product.purity} animated={!reduce} />
           </motion.div>
+          <div className="pointer-events-auto absolute right-2 top-2 z-10 sm:right-3 sm:top-3">
+            <WishlistButton item={featuredToWishlistItem(product)} size="sm" />
+          </div>
         </motion.div>
       </Link>
       <motion.div
-        className="space-y-3 p-5"
+        className="space-y-2 p-3 sm:space-y-3 sm:p-5"
         initial={{ opacity: reduce ? 1 : 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: transitionDelay(reduce, index, 0.05) + 0.1 }}
       >
         <Link href={catalogHref(`/products/${product.slug}`)} className="block hover:text-lab-primary">
-          <h3 className="font-display text-lg text-white transition group-hover:text-lab-primary">{product.name}</h3>
+          <h3 className="font-display text-sm leading-snug text-white transition group-hover:text-lab-primary sm:text-lg">
+            {product.name}
+          </h3>
         </Link>
-        <p className="font-mono text-xs text-slate-500 line-clamp-2">{product.spec}</p>
-        <motion.div className="flex items-baseline gap-2">
-          <span className="font-display text-2xl text-white tabular-nums">
+        <p className="font-mono text-[10px] text-slate-500 line-clamp-2 sm:text-xs">{product.spec}</p>
+        <motion.div className="flex flex-wrap items-baseline gap-1 sm:gap-2">
+          <span className="font-display text-lg text-white tabular-nums sm:text-2xl">
             {formatPriceRange(product.priceMin, product.priceMax, 0)}
           </span>
           {product.compareAt != null && product.compareAt > product.priceMin && (
@@ -101,7 +110,10 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
             onAddToCart(product.id);
           }}
           whileTap={tap()}
-          className={buttonVariants({ variant: 'secondary', fullWidth: true, glow: false })}
+          className={cn(
+            buttonVariants({ variant: 'secondary', fullWidth: true, glow: false, size: 'sm' }),
+            'sm:!px-6 sm:!py-3 sm:text-sm',
+          )}
         >
           <AnimatePresence mode="wait">
             {added ? (
@@ -116,7 +128,8 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
               </motion.span>
             ) : (
               <motion.span key="add" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                Add to cart
+                <span className="sm:hidden">Add</span>
+                <span className="hidden sm:inline">Add to cart</span>
               </motion.span>
             )}
           </AnimatePresence>

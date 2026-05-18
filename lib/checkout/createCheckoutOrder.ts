@@ -1,4 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { computeCartTotals } from '@/lib/cart/totals';
+import { validatePromoCode } from '@/lib/promo/codes';
 
 const FREE_SHIPPING_THRESHOLD = 400;
 const MAX_ITEMS = 40;
@@ -53,6 +55,7 @@ export type CheckoutRequestBody = {
   shippingAddress: ShippingAddress;
   items: LineIn[];
   notes?: string;
+  promoCode?: string;
 };
 
 type ProductRow = {
@@ -96,7 +99,10 @@ function num(v: number | string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-export function parseCheckoutBody(raw: unknown): CheckoutRequestBody {
+export function parseCheckoutBody(
+  raw: unknown,
+  enabledPaymentMethods: Set<string> = PAYMENT_METHODS,
+): CheckoutRequestBody {
   assert(raw && typeof raw === 'object', 'Invalid request body.', 'bad_json');
   const b = raw as Record<string, unknown>;
 
@@ -114,7 +120,7 @@ export function parseCheckoutBody(raw: unknown): CheckoutRequestBody {
   const phone = phoneRaw.length > 0 ? phoneRaw : undefined;
 
   const paymentMethod = trimStr(b.paymentMethod, 40) || 'credit-card';
-  assert(PAYMENT_METHODS.has(paymentMethod), 'Invalid payment method.', 'bad_payment');
+  assert(enabledPaymentMethods.has(paymentMethod), 'Invalid payment method.', 'bad_payment');
 
   const sm = trimStr(b.shippingMethod, 20).toLowerCase();
   assert(sm === 'standard' || sm === 'express', 'Invalid shipping method.', 'bad_shipping');
@@ -139,6 +145,8 @@ export function parseCheckoutBody(raw: unknown): CheckoutRequestBody {
   assert(itemsRaw.length <= MAX_ITEMS, 'Too many line items.', 'too_many_items');
 
   const notes = b.notes != null ? trimStr(b.notes, MAX_NOTE) : '';
+  const promoCodeRaw = trimStr(b.promoCode ?? '', 40);
+  const promoCode = promoCodeRaw.length > 0 ? promoCodeRaw.toUpperCase() : undefined;
 
   const items: LineIn[] = [];
   for (const row of itemsRaw) {
@@ -181,6 +189,7 @@ export function parseCheckoutBody(raw: unknown): CheckoutRequestBody {
     },
     items,
     notes: notes || undefined,
+    promoCode,
   };
 }
 
@@ -302,16 +311,33 @@ export type CheckoutOrderResult = {
 
 export async function createCheckoutOrder(
   admin: SupabaseClient,
-  raw: unknown
+  raw: unknown,
+  enabledPaymentMethods?: Set<string>,
 ): Promise<CheckoutOrderResult> {
-  const body = parseCheckoutBody(raw);
+  const body = parseCheckoutBody(raw, enabledPaymentMethods);
   const merged = mergeLines(body.items);
   const { lines, subtotal } = await resolveLines(admin, merged);
 
+  let promo = null;
+  if (body.promoCode) {
+    const promoResult = validatePromoCode(body.promoCode, subtotal);
+    if (!promoResult.ok) {
+      throw new CheckoutError(promoResult.message, 400, 'bad_promo');
+    }
+    promo = promoResult.promo;
+  }
+
   const shipMode = body.shippingMethod;
-  const shippingCost =
-    shipMode === 'express' ? 50 : subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 25;
-  const total = Math.round((subtotal + shippingCost) * 100) / 100;
+  const totals = computeCartTotals({ subtotal, shippingMethod: shipMode, promo });
+  const shippingCost = totals.shippingCost;
+  const total = totals.total;
+  const discount = totals.discount;
+
+  const promoNote =
+    promo && (discount > 0 || promo.freeShipping)
+      ? `Promo ${promo.code}: ${promo.label}${discount > 0 ? ` (−$${discount.toFixed(2)})` : ''}`
+      : '';
+  const combinedNotes = [body.notes, promoNote].filter(Boolean).join('\n') || null;
 
   const orderNumber = `PPL-${Date.now().toString(36).toUpperCase()}`;
 
@@ -336,7 +362,7 @@ export async function createCheckoutOrder(
       subtotal,
       shipping_cost: shippingCost,
       total,
-      notes: body.notes ?? null,
+      notes: combinedNotes,
     })
     .select('id, order_number, subtotal, shipping_cost, total')
     .single();

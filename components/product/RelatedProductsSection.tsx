@@ -25,7 +25,7 @@ export function RelatedProductsSection({ products, added, onAddToCart }: Props) 
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-lab-violet">Related constructs</p>
           <h2 className="mt-2 font-display text-2xl text-white md:text-3xl">From the same research vector</h2>
         </motion.div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
           {products.map((product, index) => (
             <ProductCard
               key={product.id}

@@ -1,0 +1,136 @@
+/**
+ * Admin shell — always light background, legible text (overrides storefront body text-slate-100).
+ * Brand: electric blue #4A9FE8, navy #2D3A52, gold accent #F5C842.
+ */
+
+.admin-shell {
+  color-scheme: light;
+  --admin-bg: #ffffff;
+  --admin-bg-subtle: #f8fafc;
+  --admin-bg-muted: #f1f5f9;
+  --admin-text: #0f172a;
+  --admin-text-secondary: #475569;
+  --admin-text-muted: #64748b;
+  --admin-border: #e2e8f0;
+  --admin-brand: #4a9fe8;
+  --admin-brand-hover: #3a8fd4;
+  --admin-navy: #2d3a52;
+  --admin-accent: #f5c842;
+  --admin-mint: #34d399;
+
+  background-color: var(--admin-bg-subtle);
+  color: var(--admin-text);
+}
+
+/* Legible defaults inside admin (beat root body color) */
+.admin-shell :where(h1, h2, h3, h4, h5, h6, p, label, td, th, li, dt, dd) {
+  color: inherit;
+}
+
+.admin-shell input,
+.admin-shell textarea,
+.admin-shell select {
+  color: var(--admin-text);
+}
+
+.admin-shell ::placeholder {
+  color: var(--admin-text-muted);
+}
+
+/* Buttons */
+.admin-shell .btn-primary {
+  color: var(--admin-navy);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(74, 159, 232, 0.35);
+}
+
+.admin-shell .btn-primary:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(74, 159, 232, 0.45);
+}
+
+/* OS dark mode: keep admin light + dark text (Tailwind dark: utilities) */
+@media (prefers-color-scheme: dark) {
+  .admin-shell {
+    background-color: var(--admin-bg-subtle);
+    color: var(--admin-text);
+  }
+
+  .admin-shell .dark\:text-white,
+  .admin-shell .dark\:text-slate-200,
+  .admin-shell .dark\:text-slate-300,
+  .admin-shell .dark\:text-slate-400 {
+    color: var(--admin-text) !important;
+  }
+
+  .admin-shell .dark\:text-slate-400 {
+    color: var(--admin-text-muted) !important;
+  }
+
+  .admin-shell .dark\:bg-slate-950,
+  .admin-shell .dark\:bg-slate-900,
+  .admin-shell .dark\:bg-slate-800,
+  .admin-shell .dark\:bg-slate-800\/50,
+  .admin-shell .dark\:bg-slate-800\/30,
+  .admin-shell .dark\:bg-slate-950\/50,
+  .admin-shell .dark\:bg-slate-950\/40,
+  .admin-shell .dark\:bg-slate-950\/20 {
+    background-color: var(--admin-bg) !important;
+  }
+
+  .admin-shell .dark\:bg-slate-800 {
+    background-color: var(--admin-bg-muted) !important;
+  }
+
+  .admin-shell .dark\:border-slate-800,
+  .admin-shell .dark\:border-slate-700,
+  .admin-shell .dark\:border-slate-600 {
+    border-color: var(--admin-border) !important;
+  }
+
+  .admin-shell .dark\:hover\:bg-slate-800:hover,
+  .admin-shell .dark\:hover\:bg-slate-800\/50:hover {
+    background-color: var(--admin-bg-muted) !important;
+  }
+
+  .admin-shell .dark\:hover\:text-white:hover {
+    color: var(--admin-brand) !important;
+  }
+}
+
+/* Branded sidebar active item */
+.admin-nav-active {
+  background: linear-gradient(90deg, rgba(74, 159, 232, 0.14) 0%, rgba(74, 159, 232, 0.04) 100%);
+  color: var(--admin-navy);
+  border-left: 3px solid var(--admin-brand);
+}
+
+.admin-nav-active svg {
+  color: var(--admin-brand);
+}
+
+/* Topbar accent line */
+.admin-topbar-brand {
+  border-bottom: 1px solid var(--admin-border);
+  box-shadow: inset 0 -2px 0 0 rgba(74, 159, 232, 0.35);
+}
+
+/* Stat card brand accents */
+.admin-stat-revenue {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(74, 159, 232, 0.08) 100%);
+  color: #059669;
+}
+
+.admin-stat-orders {
+  background: linear-gradient(135deg, rgba(74, 159, 232, 0.15) 0%, rgba(45, 58, 82, 0.06) 100%);
+  color: var(--admin-brand);
+}
+
+.admin-stat-products {
+  background: linear-gradient(135deg, rgba(245, 200, 66, 0.2) 0%, rgba(74, 159, 232, 0.06) 100%);
+  color: #b45309;
+}
+
+.admin-stat-customers {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.12) 0%, rgba(74, 159, 232, 0.08) 100%);
+  color: #6d28d9;
+}

@@ -2,18 +2,23 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { PageEnter } from '@/components/shared/PageEnter';
 import type { CategoryWithCount, FeaturedProduct, ProductDetail, ProductVariant } from '@/lib/types/catalog';
 import { featuredToCartItem, productToCartItem } from '@/lib/cart/helpers';
+import { useAddToCart } from '@/lib/cart/use-add-to-cart';
 import { getVariantPriceBounds } from '@/lib/pricing';
-import { useCartStore } from '@/lib/cart/store';
-import { useCartUIStore } from '@/lib/cart/ui-store';
+import { productToWishlistItem } from '@/lib/wishlist/helpers';
 import { StorefrontChrome } from '@/components/layout/StorefrontChrome';
 import { ProductDetailAccordions } from '@/components/product/ProductDetailAccordions';
 import { ProductGallery } from '@/components/product/ProductGallery';
 import { ProductPurchaseModule } from '@/components/product/ProductPurchaseModule';
+import { ProductReviewsSection } from '@/components/product/ProductReviewsSection';
+import { RecentlyViewedSection } from '@/components/product/RecentlyViewedSection';
 import { RelatedProductsSection } from '@/components/product/RelatedProductsSection';
+import { productToRecentlyViewedItem } from '@/lib/recently-viewed/helpers';
+import { useRecentlyViewedStore } from '@/lib/recently-viewed/store';
+import type { ProductReviewSummary } from '@/lib/types/reviews';
 import { catalogHref } from '@/lib/data/navigation';
 import { useMotionConfig } from '@/lib/motion';
 
@@ -21,13 +26,18 @@ type Props = {
   product: ProductDetail;
   related: FeaturedProduct[];
   categories: CategoryWithCount[];
+  reviewSummary: ProductReviewSummary;
 };
 
-export function ProductPageClient({ product, related, categories }: Props) {
+export function ProductPageClient({ product, related, categories, reviewSummary }: Props) {
+  const trackRecentlyViewed = useRecentlyViewedStore((s) => s.track);
+
+  useEffect(() => {
+    trackRecentlyViewed(productToRecentlyViewedItem(product));
+  }, [product, trackRecentlyViewed]);
   const { reduce } = useMotionConfig();
   const [added, setAdded] = useState<Record<string, boolean>>({});
-  const addItem = useCartStore((s) => s.addItem);
-  const setCartDrawerOpen = useCartUIStore((s) => s.setCartDrawerOpen);
+  const addToCartAction = useAddToCart();
 
   const priceBounds = useMemo(
     () => getVariantPriceBounds(product.price, product.variants),
@@ -36,22 +46,20 @@ export function ProductPageClient({ product, related, categories }: Props) {
 
   const handleAddToCart = useCallback(
     (qty: number, variant: ProductVariant | null, unitPrice: number) => {
-      addItem(productToCartItem(product, unitPrice, variant), qty);
-      setCartDrawerOpen(true);
+      addToCartAction(productToCartItem(product, unitPrice, variant), { quantity: qty });
     },
-    [addItem, product, setCartDrawerOpen],
+    [addToCartAction, product],
   );
 
   const handleRelatedAdd = useCallback(
     (id: string) => {
       const item = related.find((p) => p.id === id);
       if (!item) return;
-      addItem(featuredToCartItem(item));
-      setCartDrawerOpen(true);
+      addToCartAction(featuredToCartItem(item));
       setAdded((a) => ({ ...a, [id]: true }));
       window.setTimeout(() => setAdded((a) => ({ ...a, [id]: false })), 900);
     },
-    [addItem, related, setCartDrawerOpen],
+    [addToCartAction, related],
   );
 
   const inStock = product.stock > 0 || product.variants.some((v) => v.stock > 0);
@@ -94,7 +102,11 @@ export function ProductPageClient({ product, related, categories }: Props) {
             />
           </motion.div>
           <motion.div {...purchaseMotion}>
-            <ProductPurchaseModule product={product} onAddToCart={handleAddToCart} />
+            <ProductPurchaseModule
+              product={product}
+              wishlistItem={productToWishlistItem(product)}
+              onAddToCart={handleAddToCart}
+            />
           </motion.div>
         </motion.div>
 
@@ -112,6 +124,10 @@ export function ProductPageClient({ product, related, categories }: Props) {
             </p>
           </div>
         </section>
+
+        <ProductReviewsSection productName={product.name} summary={reviewSummary} />
+
+        <RecentlyViewedSection excludeProductId={product.id} />
 
         <RelatedProductsSection products={related} added={added} onAddToCart={handleRelatedAdd} />
       </PageEnter>

@@ -2,15 +2,18 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { CategoryWithCount } from '@/lib/types/catalog';
 import { Button } from '@/components/ui/button';
 import { StorefrontChrome } from '@/components/layout/StorefrontChrome';
+import { PromoCodeField } from '@/components/cart/PromoCodeField';
+import { OrderTotalsSummary } from '@/components/cart/OrderTotalsSummary';
 import {
   EXPRESS_SHIPPING_COST,
   FREE_SHIPPING_THRESHOLD,
   STANDARD_SHIPPING_COST,
 } from '@/lib/cart/constants';
+import { computeCartTotals } from '@/lib/cart/totals';
 import { PAYMENT_METHOD_IDS, PAYMENT_METHOD_LABELS } from '@/lib/checkout/payment-methods';
 import { useCartStore } from '@/lib/cart/store';
 import { catalogHref } from '@/lib/data/navigation';
@@ -23,19 +26,29 @@ type Props = { categories: CategoryWithCount[] };
 
 export function CheckoutPageClient({ categories }: Props) {
   const router = useRouter();
-  const { items, total, clearCart, shippingMethod, setShippingMethod } = useCartStore();
+  const { items, total, clearCart, shippingMethod, setShippingMethod, promoCode, promo } = useCartStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
+  const [enabledPaymentIds, setEnabledPaymentIds] = useState<string[]>([...PAYMENT_METHOD_IDS]);
 
-  const cartTotal = total();
-  const shippingCost =
-    shippingMethod === 'express'
-      ? EXPRESS_SHIPPING_COST
-      : cartTotal >= FREE_SHIPPING_THRESHOLD
-        ? 0
-        : STANDARD_SHIPPING_COST;
-  const finalTotal = cartTotal + shippingCost;
+  useEffect(() => {
+    fetch('/api/store/settings')
+      .then((r) => r.json())
+      .then((data: { payments?: { enabledMethods?: string[] } }) => {
+        const ids = data.payments?.enabledMethods?.filter((id) => PAYMENT_METHOD_IDS.includes(id));
+        if (ids?.length) {
+          setEnabledPaymentIds(ids);
+          setPaymentMethod((prev) => (ids.includes(prev) ? prev : ids[0]));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const cartSubtotal = total();
+  const totals = computeCartTotals({ subtotal: cartSubtotal, shippingMethod, promo });
+  const shippingCost = totals.shippingCost;
+  const finalTotal = totals.total;
 
   const [formData, setFormData] = useState({
     email: '',
@@ -81,6 +94,7 @@ export function CheckoutPageClient({ categories }: Props) {
             quantity: item.quantity,
             unitPrice: item.price,
           })),
+          promoCode: promoCode ?? undefined,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -183,7 +197,14 @@ export function CheckoutPageClient({ categories }: Props) {
                   <h2 className="font-display text-lg text-white">Shipping method</h2>
                   <div className="mt-4 space-y-2">
                     {[
-                      { id: 'standard' as const, label: 'Standard', note: cartTotal >= FREE_SHIPPING_THRESHOLD ? 'Free' : `$${STANDARD_SHIPPING_COST}` },
+                      {
+                        id: 'standard' as const,
+                        label: 'Standard',
+                        note:
+                          shippingMethod === 'standard' && shippingCost === 0
+                            ? 'Free'
+                            : `$${STANDARD_SHIPPING_COST}`,
+                      },
                       { id: 'express' as const, label: 'Express', note: `$${EXPRESS_SHIPPING_COST}` },
                     ].map((m) => (
                       <button
@@ -206,7 +227,7 @@ export function CheckoutPageClient({ categories }: Props) {
                 <section>
                   <h2 className="font-display text-lg text-white">Payment method</h2>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {PAYMENT_METHOD_IDS.map((id) => (
+                    {enabledPaymentIds.map((id) => (
                       <button
                         key={id}
                         type="button"
@@ -240,19 +261,11 @@ export function CheckoutPageClient({ categories }: Props) {
                   </li>
                 ))}
               </ul>
-              <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-sm">
-                <div className="flex justify-between text-slate-400">
-                  <span>Subtotal</span>
-                  <span>${cartTotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-slate-400">
-                  <span>Shipping</span>
-                  <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
-                </div>
-                <div className="flex justify-between font-display text-xl text-white">
-                  <span>Total</span>
-                  <span className="text-lab-primary">${finalTotal.toFixed(2)}</span>
-                </div>
+              <div className="mt-4 border-t border-white/10 pt-4">
+                <PromoCodeField subtotal={cartSubtotal} compact />
+              </div>
+              <div className="mt-4">
+                <OrderTotalsSummary showShipping size="sm" />
               </div>
               <Link href={catalogHref('/cart')} className="mt-4 block text-center text-xs text-lab-primary">
                 Edit cart

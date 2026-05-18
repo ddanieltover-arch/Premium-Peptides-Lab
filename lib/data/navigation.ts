@@ -26,16 +26,40 @@ export type ProductsUrlParams = {
   search?: string;
   sort?: CatalogSort;
   page?: number;
+  minPrice?: number;
+  maxPrice?: number;
 };
 
-export function buildProductsHref(params: ProductsUrlParams = {}): string {
-  const q = new URLSearchParams();
-  if (params.category) q.set('category', params.category);
+function appendCatalogQuery(q: URLSearchParams, params: Omit<ProductsUrlParams, 'category'>) {
   if (params.search?.trim()) q.set('search', params.search.trim());
   if (params.sort && params.sort !== 'newest') q.set('sort', params.sort);
   if (params.page && params.page > 1) q.set('page', String(params.page));
+  if (params.minPrice != null && params.minPrice > 0) q.set('min', String(params.minPrice));
+  if (params.maxPrice != null && params.maxPrice > 0) q.set('max', String(params.maxPrice));
+}
+
+export type CategoryUrlParams = Omit<ProductsUrlParams, 'category'>;
+
+export function buildProductsHref(params: ProductsUrlParams = {}): string {
+  const { category, ...rest } = params;
+  if (category) return buildCategoryHref(category, rest);
+  const q = new URLSearchParams();
+  appendCatalogQuery(q, rest);
   const qs = q.toString();
   return catalogHref(`/products${qs ? `?${qs}` : ''}`);
+}
+
+/** Category hub URL — canonical listing route for a taxonomy facet. */
+export function buildCategoryHref(slug: string, params: CategoryUrlParams = {}): string {
+  const q = new URLSearchParams();
+  appendCatalogQuery(q, params);
+  const qs = q.toString();
+  return catalogHref(`/categories/${encodeURIComponent(slug)}${qs ? `?${qs}` : ''}`);
+}
+
+/** Prefer category hub when a facet is selected; otherwise full catalog. */
+export function buildCatalogHref(params: ProductsUrlParams = {}): string {
+  return buildProductsHref(params);
 }
 
 export const ANNOUNCEMENT_MESSAGES = [

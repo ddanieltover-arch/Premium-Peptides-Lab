@@ -3,17 +3,20 @@
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useMemo, useState } from 'react';
-import { catalogHref } from '@/lib/data/navigation';
+import { WishlistButton } from '@/components/wishlist/WishlistButton';
+import { buildCategoryHref, catalogHref } from '@/lib/data/navigation';
 import type { ProductDetail, ProductVariant } from '@/lib/types/catalog';
+import type { WishlistItem } from '@/lib/wishlist/store';
 
 type Props = {
   product: ProductDetail;
+  wishlistItem: WishlistItem;
   onAddToCart: (qty: number, variant: ProductVariant | null, unitPrice: number) => void;
 };
 
 const TRUST_ITEMS = ['Third-party tested', 'Ships in 24–48h', 'Discreet packaging'] as const;
 
-export function ProductPurchaseModule({ product, onAddToCart }: Props) {
+export function ProductPurchaseModule({ product, wishlistItem, onAddToCart }: Props) {
   const reduce = useReducedMotion();
   const [variant, setVariant] = useState<ProductVariant | null>(product.variants[0] ?? null);
   const [qty, setQty] = useState(1);
@@ -41,7 +44,7 @@ export function ProductPurchaseModule({ product, onAddToCart }: Props) {
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="flex flex-wrap items-center gap-2">
         {product.category && (
           <Link
-            href={catalogHref(`/products?category=${product.category.slug}`)}
+            href={buildCategoryHref(product.category.slug)}
             className="rounded-full border border-lab-primary/30 bg-lab-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-lab-primary"
           >
             {product.category.name}
@@ -52,14 +55,17 @@ export function ProductPurchaseModule({ product, onAddToCart }: Props) {
         </span>
       </motion.div>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.05 }}
-        className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl"
-      >
-        {product.name}
-      </motion.h1>
+      <div className="flex items-start justify-between gap-3">
+        <motion.h1
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl"
+        >
+          {product.name}
+        </motion.h1>
+        <WishlistButton item={wishlistItem} />
+      </div>
 
       {formula && (
         <p className="font-mono text-sm text-slate-500">{formula}</p>

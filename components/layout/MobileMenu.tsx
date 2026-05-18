@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 import type { CategoryWithCount } from '@/lib/types/catalog';
-import { catalogHref, MAIN_NAV_LINKS, splitCategoriesIntoColumns } from '@/lib/data/navigation';
+import { buildCategoryHref, catalogHref, MAIN_NAV_LINKS, splitCategoriesIntoColumns } from '@/lib/data/navigation';
 
 type Props = {
   open: boolean;
@@ -87,7 +87,7 @@ export function MobileMenu({ open, onClose, categories }: Props) {
                             {col.map((cat) => (
                               <li key={cat.id}>
                                 <Link
-                                  href={catalogHref(`/products?category=${cat.slug}`)}
+                                  href={buildCategoryHref(cat.slug)}
                                   className="flex items-center justify-between rounded-lg px-2 py-2.5 text-sm text-slate-200 hover:bg-white/5"
                                   onClick={onClose}
                                 >

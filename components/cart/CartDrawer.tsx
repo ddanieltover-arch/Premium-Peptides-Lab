@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { catalogHref } from '@/lib/data/navigation';
+import { OrderTotalsSummary } from '@/components/cart/OrderTotalsSummary';
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/cart/constants';
 import { useCartUIStore } from '@/lib/cart/ui-store';
 import { useCartStore } from '@/lib/cart/store';
@@ -13,7 +14,7 @@ export function CartDrawer() {
   const open = useCartUIStore((s) => s.cartDrawerOpen);
   const setOpen = useCartUIStore((s) => s.setCartDrawerOpen);
   const { items, removeItem, updateQuantity, total, count } = useCartStore();
-  const cartTotal = total();
+  const cartSubtotal = total();
   const cartCount = count();
 
   return (
@@ -104,15 +105,12 @@ export function CartDrawer() {
             </div>
 
             <footer className="border-t border-white/10 p-5">
-              <div className="mb-2 flex justify-between text-sm text-slate-400">
-                <span>Subtotal</span>
-                <span className="font-display text-white">${cartTotal.toFixed(2)}</span>
-              </div>
-              {cartTotal > 0 && cartTotal < FREE_SHIPPING_THRESHOLD && (
+              {cartSubtotal > 0 && cartSubtotal < FREE_SHIPPING_THRESHOLD && (
                 <p className="mb-4 text-xs text-lab-energy">
-                  Add ${(FREE_SHIPPING_THRESHOLD - cartTotal).toFixed(0)} more for free standard shipping
+                  Add ${(FREE_SHIPPING_THRESHOLD - cartSubtotal).toFixed(0)} more for free standard shipping
                 </p>
               )}
+              <OrderTotalsSummary size="sm" />
               <Button
                 href={catalogHref('/checkout')}
                 fullWidth

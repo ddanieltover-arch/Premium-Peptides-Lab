@@ -296,6 +296,13 @@ export type CatalogQuery = {
   sort?: CatalogSort;
   page?: number;
   limit?: number;
+  minPrice?: number;
+  maxPrice?: number;
+};
+
+export type CatalogPriceBounds = {
+  min: number;
+  max: number;
 };
 
 export type CatalogResult = {
@@ -359,6 +366,36 @@ export async function getCatalogProducts(query: CatalogQuery = {}): Promise<Cata
   };
 }
 
+/** Min/max base_price for catalog price-range UI (optionally scoped to category). */
+export async function getCatalogPriceBounds(categorySlug?: string): Promise<CatalogPriceBounds> {
+  const supabase = await createClient();
+  let categoryId: string | null = null;
+
+  if (categorySlug?.trim()) {
+    const { data: cat } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('slug', categorySlug.trim())
+      .maybeSingle();
+    if (!cat) return { min: 0, max: 500 };
+    categoryId = cat.id;
+  }
+
+  let builder = supabase.from('products').select('base_price').eq('is_active', true);
+  if (categoryId) builder = builder.eq('category_id', categoryId);
+
+  const { data, error } = await builder.limit(2000);
+  if (error || !data?.length) {
+    return { min: 0, max: 500 };
+  }
+
+  const prices = data.map((r) => Number(r.base_price)).filter((n) => Number.isFinite(n) && n >= 0);
+  if (prices.length === 0) return { min: 0, max: 500 };
+  const min = Math.floor(Math.min(...prices));
+  const max = Math.ceil(Math.max(...prices));
+  return { min, max: max > min ? max : min + 1 };
+}
+
 /** Active product slugs for `app/sitemap.ts`. */
 export async function getSitemapProductSlugs(): Promise<string[]> {
   const supabase = await createClient();
@@ -366,6 +403,49 @@ export async function getSitemapProductSlugs(): Promise<string[]> {
 
   if (error) {
     console.error('[catalog] sitemap slugs:', error.message);
+    return [];
+  }
+  return (data ?? []).map((row) => row.slug).filter(Boolean);
+}
+
+export type CategoryRecord = {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  count: number;
+};
+
+export async function getCategoryBySlug(slug: string): Promise<CategoryRecord | null> {
+  const supabase = await createClient();
+  const { data: cat, error } = await supabase
+    .from('categories')
+    .select('id,name,slug,description')
+    .eq('slug', slug.trim())
+    .maybeSingle();
+
+  if (error || !cat) return null;
+
+  const { count } = await supabase
+    .from('products')
+    .select('id', { count: 'exact', head: true })
+    .eq('is_active', true)
+    .eq('category_id', cat.id);
+
+  return {
+    id: cat.id,
+    name: cat.name,
+    slug: cat.slug,
+    description: cat.description ?? null,
+    count: count ?? 0,
+  };
+}
+
+export async function getCategorySlugs(): Promise<string[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from('categories').select('slug').order('sort_order', { ascending: true });
+  if (error) {
+    console.error('[catalog] category slugs:', error.message);
     return [];
   }
   return (data ?? []).map((row) => row.slug).filter(Boolean);

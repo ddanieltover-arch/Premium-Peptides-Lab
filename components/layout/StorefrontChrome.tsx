@@ -3,6 +3,9 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import type { CategoryWithCount, FeaturedProduct } from '@/lib/types/catalog';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { ToastHost } from '@/components/ui/ToastHost';
+import { BackToTopButton } from '@/components/layout/BackToTopButton';
+import { SmartsuppChat } from '@/components/layout/SmartsuppChat';
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { MobileMenu } from '@/components/layout/MobileMenu';
@@ -11,6 +14,7 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { useCartStore } from '@/lib/cart/store';
 import { useCartUIStore } from '@/lib/cart/ui-store';
+import { useWishlistStore } from '@/lib/wishlist/store';
 
 function useHeaderScrolled(threshold = 12) {
   const [scrolled, setScrolled] = useState(false);
@@ -35,6 +39,7 @@ export function StorefrontChrome({ children, categories, highlightProduct = null
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const cartCount = useCartStore((s) => s.count());
+  const wishlistCount = useWishlistStore((s) => s.count());
   const setCartDrawerOpen = useCartUIStore((s) => s.setCartDrawerOpen);
 
   useEffect(() => {
@@ -45,21 +50,26 @@ export function StorefrontChrome({ children, categories, highlightProduct = null
   }, [mobileOpen]);
 
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative overflow-x-clip">
       <ScrollProgress />
-      <AnnouncementBar />
-      <SiteHeader
-        scrolled={scrolled}
-        megaOpen={megaOpen}
-        setMegaOpen={setMegaOpen}
-        searchOpen={searchOpen}
-        setSearchOpen={setSearchOpen}
-        cartCount={cartCount}
-        onCartClick={() => setCartDrawerOpen(true)}
-        onMobileOpen={() => setMobileOpen(true)}
-        categories={categories}
-        highlightProduct={highlightProduct}
-      />
+      <div
+        className={`sticky top-0 z-50 ${scrolled ? 'shadow-card' : ''}`}
+      >
+        <AnnouncementBar />
+        <SiteHeader
+          scrolled={scrolled}
+          megaOpen={megaOpen}
+          setMegaOpen={setMegaOpen}
+          searchOpen={searchOpen}
+          setSearchOpen={setSearchOpen}
+          cartCount={cartCount}
+          wishlistCount={wishlistCount}
+          onCartClick={() => setCartDrawerOpen(true)}
+          onMobileOpen={() => setMobileOpen(true)}
+          categories={categories}
+          highlightProduct={highlightProduct}
+        />
+      </div>
       <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} categories={categories} />
       {children}
       <SiteFooter />
@@ -72,6 +82,10 @@ export function StorefrontChrome({ children, categories, highlightProduct = null
         }}
       />
       <CartDrawer />
+      <BackToTopButton />
+      <SmartsuppChat />
+      <ToastHost />
     </div>
   );
 }
+

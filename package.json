@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "db:smoke": "node scripts/smoke-supabase.mjs",
-    "db:verify": "node scripts/verify-migration-extras.mjs"
+    "db:verify": "node scripts/verify-migration-extras.mjs",
+    "dev:legacy-admin": "npm run dev --prefix ../precision-health-store/apps/storefront -- -p 3000"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.105.4",
     "framer-motion": "^11.11.17",
+    "lucide-react": "^0.460.0",
     "next": "14.2.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

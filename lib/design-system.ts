@@ -227,6 +227,15 @@ export const fontFamilies = {
  */
 export const tailwindThemeExtend = {
   colors: {
+    primary: {
+      DEFAULT: colors.brandPrimary,
+      foreground: '#ffffff',
+      dark: '#3a8fd4',
+    },
+    brand: {
+      secondary: colors.brandSecondary,
+      accent: colors.accent,
+    },
     lab: {
       base: colors.bgBase,
       surface: colors.bgSurface,

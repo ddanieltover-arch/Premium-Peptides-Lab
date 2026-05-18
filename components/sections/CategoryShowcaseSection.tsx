@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { SITE_LINKS } from '@/lib/data/home-content';
+import { buildCategoryHref } from '@/lib/data/navigation';
 import type { CategoryWithCount } from '@/lib/types/catalog';
 
 type CategoryTile = CategoryWithCount & { tone: string };
@@ -11,7 +11,6 @@ type Props = { categories: CategoryTile[] };
 
 export function CategoryShowcaseSection({ categories }: Props) {
   const reduce = useReducedMotion();
-  const base = SITE_LINKS.catalog;
 
   return (
     <section className="border-t border-white/5 bg-lab-base py-20">
@@ -50,7 +49,7 @@ export function CategoryShowcaseSection({ categories }: Props) {
               whileHover={reduce ? undefined : { y: -6 }}
             >
               <Link
-                href={`${base}/products?category=${cat.slug}`}
+                href={buildCategoryHref(cat.slug)}
                 className={`relative block overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br ${cat.tone} p-[1px] text-left shadow-card`}
               >
                 <div className="flex h-full flex-col justify-between rounded-[0.95rem] bg-lab-base/88 p-6 backdrop-blur-xl">

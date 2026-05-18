@@ -6,6 +6,8 @@ import type { CategoryWithCount } from '@/lib/types/catalog';
 import { Button } from '@/components/ui/button';
 import { StorefrontChrome } from '@/components/layout/StorefrontChrome';
 import { catalogHref } from '@/lib/data/navigation';
+import { PromoCodeField } from '@/components/cart/PromoCodeField';
+import { OrderTotalsSummary } from '@/components/cart/OrderTotalsSummary';
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/cart/constants';
 import { useCartStore } from '@/lib/cart/store';
 
@@ -13,7 +15,7 @@ type Props = { categories: CategoryWithCount[] };
 
 export function CartPageClient({ categories }: Props) {
   const { items, removeItem, updateQuantity, total, count } = useCartStore();
-  const cartTotal = total();
+  const cartSubtotal = total();
   const cartCount = count();
 
   return (
@@ -92,20 +94,17 @@ export function CartPageClient({ categories }: Props) {
 
             <aside className="h-fit rounded-2xl border border-white/10 bg-lab-elevated/50 p-6 lg:sticky lg:top-28">
               <h2 className="font-display text-lg text-white">Order summary</h2>
-              <div className="mt-4 flex justify-between text-sm text-slate-400">
-                <span>Subtotal ({cartCount} items)</span>
-                <span className="text-white">${cartTotal.toFixed(2)}</span>
-              </div>
-              {cartTotal < FREE_SHIPPING_THRESHOLD && (
+              <p className="mt-2 text-sm text-slate-400">{cartCount} item{cartCount === 1 ? '' : 's'}</p>
+              {cartSubtotal < FREE_SHIPPING_THRESHOLD && (
                 <p className="mt-3 text-xs text-lab-energy">
                   Free standard shipping on orders ${FREE_SHIPPING_THRESHOLD}+
                 </p>
               )}
+              <div className="mt-4">
+                <PromoCodeField subtotal={cartSubtotal} />
+              </div>
               <div className="mt-6 border-t border-white/10 pt-4">
-                <div className="flex justify-between font-display text-xl text-white">
-                  <span>Total</span>
-                  <span className="text-lab-primary">${cartTotal.toFixed(2)}</span>
-                </div>
+                <OrderTotalsSummary />
               </div>
               <Button href={catalogHref('/checkout')} fullWidth size="lg" className="mt-6">
                 Proceed to checkout

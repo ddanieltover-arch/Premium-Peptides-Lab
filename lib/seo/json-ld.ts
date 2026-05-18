@@ -81,7 +81,7 @@ export function productBreadcrumbJsonLd(product: ProductDetail): JsonLd {
   if (product.category) {
     items.push({
       name: product.category.name,
-      item: `${siteUrl}/products?category=${product.category.slug}`,
+      item: `${siteUrl}/categories/${product.category.slug}`,
     });
   }
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { LEGAL_FOOTER_LINKS } from '@/lib/data/legal';
 import { catalogHref } from '@/lib/data/navigation';
 
 export function SiteFooter() {
@@ -18,7 +19,7 @@ export function SiteFooter() {
             institutional review requirements before acquisition.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {[
             [
               { href: catalogHref('/products'), label: 'Catalog' },
@@ -33,8 +34,12 @@ export function SiteFooter() {
             [
               { href: catalogHref('/research'), label: 'Research' },
               { href: catalogHref('/peptide-calculator'), label: 'Calculator' },
-              { href: catalogHref('/products'), label: 'Shop' },
+              { href: catalogHref('/wishlist'), label: 'Wishlist' },
             ],
+            LEGAL_FOOTER_LINKS.map((link) => ({
+              href: catalogHref(link.href),
+              label: link.label,
+            })),
           ].map((col, i) => (
             <ul key={i} className="space-y-2 text-xs">
               {col.map((link) => (
@@ -48,10 +53,22 @@ export function SiteFooter() {
           ))}
         </div>
       </div>
-      <p className="mx-auto mt-10 max-w-7xl border-t border-white/5 px-4 pt-8 text-center text-[11px] text-slate-600">
-        For research purposes only. Not for human consumption, diagnostic, or clinical use. Premium Peptides Lab does
-        not supply dosing or therapeutic guidance.
-      </p>
+      <div className="mx-auto mt-10 max-w-7xl border-t border-white/5 px-4 pt-8 text-center">
+        <nav className="mb-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11px] text-slate-500">
+          {LEGAL_FOOTER_LINKS.map((link, i) => (
+            <span key={link.href} className="inline-flex items-center gap-4">
+              {i > 0 ? <span className="text-slate-700" aria-hidden>·</span> : null}
+              <Link href={catalogHref(link.href)} className="hover:text-slate-300">
+                {link.label}
+              </Link>
+            </span>
+          ))}
+        </nav>
+        <p className="text-[11px] text-slate-600">
+          For research purposes only. Not for human consumption, diagnostic, or clinical use. Premium Peptides Lab does
+          not supply dosing or therapeutic guidance.
+        </p>
+      </div>
     </footer>
   );
 }

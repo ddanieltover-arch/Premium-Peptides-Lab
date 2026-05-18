@@ -2,6 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { PromoApplication } from '@/lib/promo/codes';
 
 export type CartItem = {
   productId: string;
@@ -20,10 +21,14 @@ export type ShippingMethod = 'standard' | 'express';
 type CartState = {
   items: CartItem[];
   shippingMethod: ShippingMethod;
+  promoCode: string | null;
+  promo: PromoApplication | null;
   addItem: (item: Omit<CartItem, 'quantity'>, quantity?: number) => void;
   removeItem: (productId: string, variantId?: string) => void;
   updateQuantity: (productId: string, quantity: number, variantId?: string) => void;
   setShippingMethod: (method: ShippingMethod) => void;
+  setPromo: (promo: PromoApplication | null, code?: string | null) => void;
+  clearPromo: () => void;
   clearCart: () => void;
   total: () => number;
   count: () => number;
@@ -38,6 +43,8 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
       shippingMethod: 'standard',
+      promoCode: null,
+      promo: null,
 
       addItem: (item, quantity = 1) => {
         set((state) => {
@@ -76,7 +83,15 @@ export const useCartStore = create<CartState>()(
 
       setShippingMethod: (method) => set({ shippingMethod: method }),
 
-      clearCart: () => set({ items: [] }),
+      setPromo: (promo, code) =>
+        set({
+          promo,
+          promoCode: promo ? (code ?? promo.code) : null,
+        }),
+
+      clearPromo: () => set({ promo: null, promoCode: null }),
+
+      clearCart: () => set({ items: [], promo: null, promoCode: null }),
 
       total: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),
 
