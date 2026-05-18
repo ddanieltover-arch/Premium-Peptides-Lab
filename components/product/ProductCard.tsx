@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { buttonVariants } from '@/components/ui/button';
-import { PurityBadge } from '@/components/ui/badge';
+import { StockBadge } from '@/components/catalog/StockBadge';
+import { PurityBadge, SaleBadge } from '@/components/ui/badge';
+import { StarRating } from '@/components/ui/star-rating';
+import { resolveProductStock } from '@/lib/catalog/stock';
 import { cardVariants } from '@/components/ui/card';
 import { catalogHref } from '@/lib/data/navigation';
 import { cn } from '@/lib/cn';
@@ -29,6 +32,8 @@ type ProductCardProps = {
 
 export function ProductCard({ product, index, added, onAddToCart }: ProductCardProps) {
   const { reduce, tap } = useMotionConfig();
+  const stock = resolveProductStock(product.stock, null);
+  const onSale = product.compareAt != null && product.compareAt > product.priceMin;
 
   return (
     <motion.article
@@ -66,15 +71,24 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
               }}
             />
           </motion.div>
-          <motion.div
-            className="absolute left-2 top-2 sm:left-3 sm:top-3"
-            initial={{ opacity: reduce ? 1 : 0, x: reduce ? 0 : -8 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: transitionDelay(reduce, index, 0.05) + 0.15 }}
-          >
-            <PurityBadge value={product.purity} animated={!reduce} />
-          </motion.div>
+          <div className="absolute left-2 top-2 flex flex-col gap-1.5 sm:left-3 sm:top-3">
+            <motion.div
+              initial={{ opacity: reduce ? 1 : 0, x: reduce ? 0 : -8 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: transitionDelay(reduce, index, 0.05) + 0.15 }}
+            >
+              <PurityBadge value={product.purity} animated={!reduce} size="sm" />
+            </motion.div>
+            {onSale ? <SaleBadge /> : null}
+            {stock.label ? (
+              <StockBadge
+                label={stock.label}
+                lowStock={stock.lowStock}
+                outOfStock={!stock.inStock}
+              />
+            ) : null}
+          </div>
           <div className="pointer-events-auto absolute right-2 top-2 z-10 sm:right-3 sm:top-3">
             <WishlistButton item={featuredToWishlistItem(product)} size="sm" />
           </div>
@@ -93,6 +107,9 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
           </h3>
         </Link>
         <p className="font-mono text-[10px] text-slate-500 line-clamp-2 sm:text-xs">{product.spec}</p>
+        {product.ratingCount > 0 ? (
+          <StarRating rating={product.ratingAverage} count={product.ratingCount} />
+        ) : null}
         <motion.div className="flex flex-wrap items-baseline gap-1 sm:gap-2">
           <span className="font-display text-lg text-white tabular-nums sm:text-2xl">
             {formatPriceRange(product.priceMin, product.priceMax, 0)}
@@ -105,14 +122,17 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
         </motion.div>
         <motion.button
           type="button"
+          disabled={!stock.inStock}
           onClick={(e) => {
             e.preventDefault();
+            if (!stock.inStock) return;
             onAddToCart(product.id);
           }}
-          whileTap={tap()}
+          whileTap={stock.inStock ? tap() : undefined}
           className={cn(
             buttonVariants({ variant: 'secondary', fullWidth: true, glow: false, size: 'sm' }),
             'sm:!px-6 sm:!py-3 sm:text-sm',
+            !stock.inStock && 'cursor-not-allowed opacity-50',
           )}
         >
           <AnimatePresence mode="wait">
@@ -128,8 +148,14 @@ export function ProductCard({ product, index, added, onAddToCart }: ProductCardP
               </motion.span>
             ) : (
               <motion.span key="add" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <span className="sm:hidden">Add</span>
-                <span className="hidden sm:inline">Add to cart</span>
+                {!stock.inStock ? (
+                  'Out of stock'
+                ) : (
+                  <>
+                    <span className="sm:hidden">Add</span>
+                    <span className="hidden sm:inline">Add to cart</span>
+                  </>
+                )}
               </motion.span>
             )}
           </AnimatePresence>

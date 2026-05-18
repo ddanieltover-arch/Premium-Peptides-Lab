@@ -19,8 +19,10 @@ import {
 } from '@/lib/data/navigation';
 import type { CatalogPriceBounds, CatalogResult } from '@/lib/data/catalog';
 import type { CategoryHubContent } from '@/lib/data/category-hubs';
-import { CategoryHubHero } from '@/components/catalog/CategoryHubHero';
+import { CatalogActiveFilters } from '@/components/catalog/CatalogActiveFilters';
 import { CatalogPriceFilter } from '@/components/catalog/CatalogPriceFilter';
+import { CatalogResultsSummary } from '@/components/catalog/CatalogResultsSummary';
+import { CategoryHubHero } from '@/components/catalog/CategoryHubHero';
 
 type Props = {
   catalog: CatalogResult;
@@ -67,8 +69,6 @@ export function CatalogPageClient({
   const activeCat = categories.find((c) => c.slug === activeCategory);
   const listFormAction = liveCatalogHref(activeCategory ? `/categories/${activeCategory}` : '/products');
   const filterParams = { search, sort, minPrice, maxPrice };
-  const hasPriceFilter =
-    (minPrice != null && minPrice > 0) || (maxPrice != null && maxPrice > 0);
 
   const onCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const slug = e.target.value;
@@ -203,53 +203,39 @@ export function CatalogPageClient({
             </form>
           </div>
 
-          {(search || sort !== 'newest' || hasPriceFilter) && (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {search ? (
-                <Link
-                  href={
-                    activeCategory
-                      ? buildCategoryHref(activeCategory, { sort, minPrice, maxPrice })
-                      : buildProductsHref({ sort, minPrice, maxPrice })
-                  }
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-lab-surface/60 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-400 hover:text-white"
-                >
-                  Clear search ×
-                </Link>
-              ) : null}
-              {sort !== 'newest' ? (
-                <Link
-                  href={
-                    activeCategory
-                      ? buildCategoryHref(activeCategory, { search, minPrice, maxPrice })
-                      : buildProductsHref({ search, minPrice, maxPrice })
-                  }
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-lab-surface/60 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-400 hover:text-white"
-                >
-                  Reset sort ×
-                </Link>
-              ) : null}
-              {hasPriceFilter ? (
-                <Link
-                  href={
-                    activeCategory
-                      ? buildCategoryHref(activeCategory, { search, sort })
-                      : buildProductsHref({ search, sort })
-                  }
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-lab-surface/60 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-400 hover:text-white"
-                >
-                  Clear price ×
-                </Link>
-              ) : null}
-            </div>
-          )}
+          <CatalogActiveFilters
+            activeCategory={activeCategory}
+            activeCategoryName={activeCat?.name}
+            search={search}
+            sort={sort}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+          />
         </motion.header>
 
         <div className="mx-auto max-w-7xl px-4">
+          <div className="mb-6">
+            <CatalogResultsSummary
+              page={catalog.page}
+              pageSize={catalog.pageSize}
+              total={catalog.total}
+              showingCount={catalog.products.length}
+            />
+          </div>
+
           {catalog.products.length === 0 ? (
-            <p className="rounded-2xl border border-white/10 bg-lab-surface/50 py-16 text-center text-sm text-slate-500">
-              No products match this filter.
-            </p>
+            <div className="rounded-2xl border border-dashed border-white/15 bg-lab-surface/40 px-6 py-16 text-center">
+              <p className="font-display text-lg text-white">No products match your filters</p>
+              <p className="mt-2 text-sm text-slate-500">
+                Try clearing search, price range, or category filters.
+              </p>
+              <Link
+                href={activeCategory ? buildCategoryHref(activeCategory, {}) : buildProductsHref({})}
+                className="mt-6 inline-flex rounded-xl border border-lab-primary/40 bg-lab-primary/15 px-5 py-2.5 font-mono text-[10px] uppercase tracking-wider text-lab-primary hover:bg-lab-primary/25"
+              >
+                View all products
+              </Link>
+            </div>
           ) : (
             <motion.div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
               {catalog.products.map((product, index) => (

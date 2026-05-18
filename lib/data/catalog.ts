@@ -1,6 +1,8 @@
+import { resolveProductStock } from '@/lib/catalog/stock';
 import { createClient } from '@/lib/supabase/server';
 import type { CatalogSort } from '@/lib/data/navigation';
 import { CATALOG_SORT_OPTIONS } from '@/lib/data/navigation';
+import { getCatalogRatingSummaries } from '@/lib/data/reviews';
 import { getVariantPriceBoundsFromRow } from '@/lib/pricing';
 import type {
   CategoryWithCount,
@@ -24,7 +26,7 @@ const SHOWCASE_TONES = [
 ] as const;
 
 const PRODUCT_LIST_SELECT =
-  'id,name,slug,short_desc,description,base_price,compare_price,thumbnail_url,variants(price_modifier)';
+  'id,name,slug,short_desc,description,base_price,compare_price,thumbnail_url,stock,variants(price_modifier,stock)';
 
 type ProductRow = {
   id: string;
@@ -35,16 +37,21 @@ type ProductRow = {
   base_price: number | string;
   compare_price: number | string | null;
   thumbnail_url: string | null;
-  variants?: { price_modifier: number | string | null }[];
+  stock?: number | null;
+  variants?: { price_modifier: number | string | null; stock?: number | null }[];
 };
 
-function mapProduct(row: ProductRow): FeaturedProduct {
+function mapProduct(
+  row: ProductRow,
+  ratings?: { ratingAverage: number; ratingCount: number },
+): FeaturedProduct {
   const spec =
     row.short_desc?.trim() ||
     (row.description ? row.description.slice(0, 72) + (row.description.length > 72 ? '…' : '') : 'Research-grade · COA on file');
 
   const base = Number(row.base_price) || 0;
   const { min, max } = getVariantPriceBoundsFromRow(row);
+  const stockInfo = resolveProductStock(row.stock, row.variants);
 
   return {
     id: row.id,
@@ -57,7 +64,15 @@ function mapProduct(row: ProductRow): FeaturedProduct {
     priceMax: max,
     compareAt: row.compare_price != null ? Number(row.compare_price) : null,
     image: row.thumbnail_url?.trim() || PLACEHOLDER_IMAGE,
+    stock: stockInfo.total,
+    ratingAverage: ratings?.ratingAverage ?? 0,
+    ratingCount: ratings?.ratingCount ?? 0,
   };
+}
+
+async function enrichCatalogProducts(rows: ProductRow[]): Promise<FeaturedProduct[]> {
+  const ratingMap = await getCatalogRatingSummaries(rows.map((r) => r.id));
+  return rows.map((row) => mapProduct(row, ratingMap.get(row.id)));
 }
 
 export async function getFeaturedProducts(limit = 4): Promise<FeaturedProduct[]> {
@@ -95,7 +110,7 @@ export async function getFeaturedProducts(limit = 4): Promise<FeaturedProduct[]>
     }
   }
 
-  return rows.slice(0, limit).map(mapProduct);
+  return enrichCatalogProducts(rows.slice(0, limit));
 }
 
 export async function getCategoryShowcase(limit = 6): Promise<(CategoryWithCount & { tone: string })[]> {
@@ -259,7 +274,7 @@ export async function getRelatedProducts(
     console.error('[catalog] related:', error.message);
     return [];
   }
-  return (data ?? []).map((row) => mapProduct(row as ProductRow));
+  return enrichCatalogProducts((data ?? []) as ProductRow[]);
 }
 
 const CATALOG_SORT_SET = new Set<CatalogSort>(CATALOG_SORT_OPTIONS.map((o) => o.value));
@@ -305,11 +320,14 @@ export type CatalogPriceBounds = {
   max: number;
 };
 
+export const CATALOG_PAGE_SIZE = 24;
+
 export type CatalogResult = {
   products: FeaturedProduct[];
   total: number;
   page: number;
   totalPages: number;
+  pageSize: number;
 };
 
 /** Paginated catalog for `/products` — respects category + search query params. */
@@ -328,7 +346,7 @@ export async function getCatalogProducts(query: CatalogQuery = {}): Promise<Cata
       .select('id')
       .eq('slug', query.categorySlug.trim())
       .maybeSingle();
-    if (!cat) return { products: [], total: 0, page, totalPages: 0 };
+    if (!cat) return { products: [], total: 0, page, totalPages: 0, pageSize: limit };
     categoryId = cat.id;
   }
 
@@ -354,15 +372,17 @@ export async function getCatalogProducts(query: CatalogQuery = {}): Promise<Cata
 
   if (error) {
     console.error('[catalog] list:', error.message);
-    return { products: [], total: 0, page, totalPages: 0 };
+    return { products: [], total: 0, page, totalPages: 0, pageSize: limit };
   }
 
   const total = count ?? 0;
+  const rows = (data ?? []) as ProductRow[];
   return {
-    products: (data ?? []).map((row) => mapProduct(row as ProductRow)),
+    products: await enrichCatalogProducts(rows),
     total,
     page,
     totalPages: total > 0 ? Math.ceil(total / limit) : 0,
+    pageSize: limit,
   };
 }
 

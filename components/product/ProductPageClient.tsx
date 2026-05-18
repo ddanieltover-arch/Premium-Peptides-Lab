@@ -74,6 +74,9 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
     priceMax: priceBounds.max,
     compareAt: product.compareAt,
     image: product.image,
+    stock: product.stock,
+    ratingAverage: 0,
+    ratingCount: 0,
   };
 
   const purchaseMotion = reduce

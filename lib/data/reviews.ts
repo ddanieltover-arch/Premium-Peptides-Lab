@@ -29,7 +29,7 @@ const REVIEW_SNIPPETS: { body: string; title?: string; rating: number }[] = [
   },
 ];
 
-function hashSeed(input: string): number {
+export function hashSeed(input: string): number {
   let h = 0;
   for (let i = 0; i < input.length; i++) h = (h * 31 + input.charCodeAt(i)) | 0;
   return Math.abs(h);
@@ -65,7 +65,7 @@ function fallbackReviews(productId: string, productName: string): ProductReview[
   });
 }
 
-function summarize(reviews: ProductReview[]): ProductReviewSummary {
+export function summarizeReviews(reviews: ProductReview[]): ProductReviewSummary {
   if (reviews.length === 0) {
     return { reviews: [], averageRating: 0, count: 0 };
   }
@@ -93,14 +93,14 @@ export async function getProductReviews(
 
     if (error) {
       if (error.code === '42P01') {
-        return summarize(fallbackReviews(productId, productName));
+        return summarizeReviews(fallbackReviews(productId, productName));
       }
       console.error('[reviews]', error.message);
-      return summarize(fallbackReviews(productId, productName));
+      return summarizeReviews(fallbackReviews(productId, productName));
     }
 
     if (!data?.length) {
-      return summarize(fallbackReviews(productId, productName));
+      return summarizeReviews(fallbackReviews(productId, productName));
     }
 
     const reviews: ProductReview[] = data.map((row) => ({
@@ -113,8 +113,55 @@ export async function getProductReviews(
       body: row.body,
       createdAt: row.created_at,
     }));
-    return summarize(reviews);
+    return summarizeReviews(reviews);
   } catch {
-    return summarize(fallbackReviews(productId, productName));
+    return summarizeReviews(fallbackReviews(productId, productName));
   }
+}
+
+import { catalogRatingFallback } from '@/lib/catalog/rating-fallback';
+
+/** Batch review aggregates for catalog cards (falls back per product when missing). */
+export async function getCatalogRatingSummaries(
+  productIds: string[],
+): Promise<Map<string, { ratingAverage: number; ratingCount: number }>> {
+  const map = new Map<string, { ratingAverage: number; ratingCount: number }>();
+  for (const id of productIds) {
+    map.set(id, catalogRatingFallback(id));
+  }
+  if (productIds.length === 0) return map;
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('product_reviews')
+      .select('product_id,rating')
+      .eq('is_published', true)
+      .in('product_id', productIds);
+
+    if (error) {
+      if (error.code !== '42P01') console.error('[reviews] catalog batch:', error.message);
+      return map;
+    }
+
+    const buckets = new Map<string, number[]>();
+    for (const row of data ?? []) {
+      const list = buckets.get(row.product_id) ?? [];
+      list.push(row.rating);
+      buckets.set(row.product_id, list);
+    }
+
+    for (const [productId, ratings] of Array.from(buckets.entries())) {
+      if (ratings.length === 0) continue;
+      const sum = ratings.reduce((n, r) => n + r, 0);
+      map.set(productId, {
+        ratingAverage: Math.round((sum / ratings.length) * 10) / 10,
+        ratingCount: ratings.length,
+      });
+    }
+  } catch {
+    /* keep fallbacks */
+  }
+
+  return map;
 }

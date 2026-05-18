@@ -12,6 +12,12 @@ export type FeaturedProduct = {
   priceMax: number;
   compareAt: number | null;
   image: string;
+  /** Total available units (base stock or sum of variant stock). */
+  stock: number;
+  /** Average star rating for card display (1–5). */
+  ratingAverage: number;
+  /** Published review count for card display. */
+  ratingCount: number;
 };
 
 export type CategoryWithCount = {

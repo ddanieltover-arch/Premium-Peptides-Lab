@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { featuredToCartItem } from '@/lib/cart/helpers';
 import { useAddToCart } from '@/lib/cart/use-add-to-cart';
 import { catalogHref } from '@/lib/data/navigation';
+import { catalogRatingFallback } from '@/lib/catalog/rating-fallback';
 import { formatPriceRange } from '@/lib/pricing';
 import { useWishlistStore } from '@/lib/wishlist/store';
 
@@ -59,7 +60,8 @@ export function WishlistPageClient({ categories }: Props) {
                     <Button
                       type="button"
                       size="sm"
-                      onClick={() =>
+                      onClick={() => {
+                        const ratings = catalogRatingFallback(item.productId);
                         addToCart(
                           featuredToCartItem({
                             id: item.productId,
@@ -72,9 +74,12 @@ export function WishlistPageClient({ categories }: Props) {
                             priceMax: item.priceMax,
                             compareAt: null,
                             image: item.image,
+                            stock: 99,
+                            ratingAverage: ratings.ratingAverage,
+                            ratingCount: ratings.ratingCount,
                           }),
-                        )
-                      }
+                        );
+                      }}
                     >
                       Add to cart
                     </Button>

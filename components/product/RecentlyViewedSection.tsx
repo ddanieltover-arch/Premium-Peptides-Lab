@@ -8,6 +8,7 @@ import { featuredToCartItem } from '@/lib/cart/helpers';
 import { useAddToCart } from '@/lib/cart/use-add-to-cart';
 import { useRecentlyViewedStore } from '@/lib/recently-viewed/store';
 import { catalogHref } from '@/lib/data/navigation';
+import { catalogRatingFallback } from '@/lib/catalog/rating-fallback';
 
 type Props = {
   /** Hide this product on PDP when showing recently viewed */
@@ -16,6 +17,7 @@ type Props = {
 };
 
 function toFeatured(item: ReturnType<typeof useRecentlyViewedStore.getState>['items'][0]): FeaturedProduct {
+  const ratings = catalogRatingFallback(item.productId);
   return {
     id: item.productId,
     slug: item.slug,
@@ -27,6 +29,9 @@ function toFeatured(item: ReturnType<typeof useRecentlyViewedStore.getState>['it
     priceMax: item.priceMax,
     compareAt: null,
     image: item.image,
+    stock: 99,
+    ratingAverage: ratings.ratingAverage,
+    ratingCount: ratings.ratingCount,
   };
 }
 
