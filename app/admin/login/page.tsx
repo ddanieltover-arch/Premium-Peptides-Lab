@@ -1,13 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, Mail, Loader2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { createClient } from "@/lib/supabase/client";
 
+function randomEmailPlaceholder(): string {
+  const id =
+    typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID().replace(/-/g, "").slice(0, 10)
+      : Math.random().toString(36).slice(2, 12);
+  return `admin-${id}@example.com`;
+}
+
 export default function LoginPage() {
   const router = useRouter();
+  const emailPlaceholder = useMemo(() => randomEmailPlaceholder(), []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -59,7 +68,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="researchprecisionhealth@gmail.com"
+                  placeholder={emailPlaceholder}
                   className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm text-slate-900 outline-none transition-all focus:border-lab-primary focus:bg-white focus:ring-4 focus:ring-lab-primary/15"
                 />
               </div>
