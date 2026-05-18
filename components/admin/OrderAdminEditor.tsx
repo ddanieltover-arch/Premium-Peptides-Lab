@@ -141,6 +141,9 @@ export function OrderAdminEditor({ order, onSaved }: Props) {
       onSaved(updated);
       setBaseline(snapshot(updated));
       setMessage("saved");
+      window.dispatchEvent(
+        new CustomEvent("admin-order-updated", { detail: { id: updated.id, status: updated.status } }),
+      );
       window.setTimeout(() => setMessage("idle"), 3500);
 
       if (statusChanged && status !== previousStatus) {
@@ -225,10 +228,13 @@ export function OrderAdminEditor({ order, onSaved }: Props) {
           <label className="text-xs font-bold uppercase tracking-wider text-slate-500">Fulfillment status</label>
           <select value={status} onChange={(e) => setStatus(e.target.value)} className={fieldClass}>
             <option value="PENDING">Pending</option>
+            <option value="CONFIRMED">Confirmed</option>
             <option value="PROCESSING">Processing</option>
             <option value="SHIPPED">Shipped</option>
             <option value="DELIVERED">Delivered</option>
             <option value="CANCELLED">Cancelled</option>
+            <option value="REFUNDED">Refunded</option>
+            <option value="SUPPORT">Support</option>
           </select>
         </div>
         <div className="space-y-2">

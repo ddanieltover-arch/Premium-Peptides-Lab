@@ -16,6 +16,7 @@ import {
   Trash2,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { adminApiJson } from "@/lib/admin/fetch";
 
@@ -31,7 +32,7 @@ const statusConfig: Record<string, { label: string; icon: LucideIcon; class: str
 };
 
 function statusBadge(orderStatus: string | undefined) {
-  const key = (orderStatus || "").trim();
+  const key = (orderStatus || "").trim().toUpperCase();
   if (key && statusConfig[key]) return statusConfig[key];
   return {
     label: key || "Unknown",
@@ -41,6 +42,7 @@ function statusBadge(orderStatus: string | undefined) {
 }
 
 export default function OrdersPage() {
+  const pathname = usePathname();
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -49,7 +51,21 @@ export default function OrdersPage() {
   const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchOrders();
+    if (pathname !== "/admin/orders") return;
+    void fetchOrders();
+  }, [pathname]);
+
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void fetchOrders();
+    };
+    const onOrderUpdated = () => void fetchOrders();
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("admin-order-updated", onOrderUpdated);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("admin-order-updated", onOrderUpdated);
+    };
   }, []);
 
   async function fetchOrders() {

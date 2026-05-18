@@ -1,6 +1,15 @@
 import { PAYMENT_METHOD_IDS } from '@/lib/checkout/payment-methods';
 
-const ORDER_STATUSES = new Set(['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED']);
+const ORDER_STATUSES = new Set([
+  'PENDING',
+  'CONFIRMED',
+  'PROCESSING',
+  'SHIPPED',
+  'DELIVERED',
+  'CANCELLED',
+  'REFUNDED',
+  'SUPPORT',
+]);
 const PAYMENT_STATUSES = new Set(['UNPAID', 'PAID', 'REFUNDED', 'PARTIAL']);
 const SHIPPING_METHODS = new Set(['standard', 'express']);
 

@@ -129,7 +129,7 @@ export default function OrderDetailsPage() {
 
       <OrderAdminEditor
         order={order as Parameters<typeof OrderAdminEditor>[0]["order"]}
-        onSaved={(updated) => setOrder({ ...order, ...updated })}
+        onSaved={(updated) => setOrder((prev) => ({ ...prev, ...updated }))}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 print:gap-6 print:break-inside-avoid">
