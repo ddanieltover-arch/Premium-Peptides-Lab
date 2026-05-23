@@ -37,7 +37,15 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
   }, [product, trackRecentlyViewed]);
   const { reduce } = useMotionConfig();
   const [added, setAdded] = useState<Record<string, boolean>>({});
+  const [coaSectionOpen, setCoaSectionOpen] = useState(false);
   const addToCartAction = useAddToCart();
+
+  useEffect(() => {
+    const syncHash = () => setCoaSectionOpen(window.location.hash === '#coa');
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+    return () => window.removeEventListener('hashchange', syncHash);
+  }, []);
 
   const priceBounds = useMemo(
     () => getVariantPriceBounds(product.price, product.variants),
@@ -114,7 +122,7 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
         </motion.div>
 
         <div className="mx-auto max-w-3xl px-4 pb-16 lg:max-w-4xl">
-          <ProductDetailAccordions product={product} />
+          <ProductDetailAccordions product={product} defaultOpenId={coaSectionOpen ? 'coa' : undefined} />
         </div>
 
         <section className="border-t border-white/5 py-12">

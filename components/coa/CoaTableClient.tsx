@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { catalogHref } from '@/lib/data/navigation';
+import { coaProductHref } from '@/lib/coa/href';
 import type { CoaEntry } from '@/lib/types/coa';
+
+const docLinkClass =
+  'font-mono text-[10px] uppercase tracking-wider text-lab-primary hover:text-white';
 
 function formatMonthYear(isoDate: string) {
   return new Date(isoDate).toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
@@ -69,8 +72,8 @@ export function CoaTableClient({ entries }: Props) {
               <tr key={`${entry.productSlug}-${entry.batchId}`} className="transition hover:bg-white/[0.03]">
                 <td className="px-4 py-3.5 font-display text-white">
                   <Link
-                    href={catalogHref(`/products/${entry.productSlug}`)}
-                    className="hover:text-lab-primary"
+                    href={coaProductHref(entry.productSlug)}
+                    className="hover:text-lab-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lab-primary"
                   >
                     {entry.productName}
                   </Link>
@@ -85,23 +88,9 @@ export function CoaTableClient({ entries }: Props) {
                 </td>
                 <td className="px-4 py-3.5 text-slate-500">{formatMonthYear(entry.updatedAt)}</td>
                 <td className="px-4 py-3.5">
-                  {entry.coaDocumentUrl ? (
-                    <a
-                      href={entry.coaDocumentUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-[10px] uppercase tracking-wider text-lab-primary hover:text-white"
-                    >
-                      Open COA
-                    </a>
-                  ) : (
-                    <Link
-                      href={catalogHref(`/products/${entry.productSlug}`)}
-                      className="font-mono text-[10px] uppercase tracking-wider text-slate-500 hover:text-lab-primary"
-                    >
-                      Product page
-                    </Link>
-                  )}
+                  <Link href={coaProductHref(entry.productSlug)} className={docLinkClass}>
+                    Open COA
+                  </Link>
                 </td>
               </tr>
             ))}

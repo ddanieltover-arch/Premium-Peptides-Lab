@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { catalogHref } from '@/lib/data/navigation';
 import type { ProductDetail } from '@/lib/types/catalog';
 
@@ -11,9 +11,13 @@ type Section = {
   content: React.ReactNode;
 };
 
-type Props = { product: ProductDetail };
+type Props = {
+  product: ProductDetail;
+  /** When set (e.g. from `#coa`), opens the certificate section on load. */
+  defaultOpenId?: string;
+};
 
-export function ProductDetailAccordions({ product }: Props) {
+export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
   const reduce = useReducedMotion();
   const sections: Section[] = [
     {
@@ -104,14 +108,18 @@ export function ProductDetailAccordions({ product }: Props) {
     },
   ];
 
-  const [openId, setOpenId] = useState<string>('description');
+  const [openId, setOpenId] = useState<string>(defaultOpenId ?? 'description');
+
+  useEffect(() => {
+    if (defaultOpenId) setOpenId(defaultOpenId);
+  }, [defaultOpenId]);
 
   return (
     <div className="divide-y divide-white/10 rounded-2xl border border-white/10 bg-lab-elevated/30">
       {sections.map((section) => {
         const open = openId === section.id;
         return (
-          <div key={section.id}>
+          <div key={section.id} id={section.id === 'coa' ? 'coa' : undefined}>
             <button
               type="button"
               className="flex w-full items-center justify-between px-5 py-4 text-left font-display text-sm text-white"
