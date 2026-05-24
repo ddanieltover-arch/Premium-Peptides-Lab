@@ -4,3 +4,8 @@ import { catalogHref } from '@/lib/data/navigation';
 export function coaProductHref(productSlug: string): string {
   return catalogHref(`/products/${encodeURIComponent(productSlug)}#coa`);
 }
+
+/** Site-wide COA index page. */
+export function coaLibraryHref(): string {
+  return catalogHref('/coa');
+}

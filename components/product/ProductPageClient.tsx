@@ -105,12 +105,7 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
 
         <motion.div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 lg:grid-cols-2 lg:items-start lg:gap-12 lg:py-12">
           <motion.div className="mx-auto w-full max-w-sm lg:max-w-md lg:justify-self-start">
-            <ProductGallery
-              name={product.name}
-              images={product.images}
-              coaUrl={product.coaUrl}
-              inStock={inStock}
-            />
+            <ProductGallery name={product.name} images={product.images} inStock={inStock} />
           </motion.div>
           <motion.div {...purchaseMotion}>
             <ProductPurchaseModule

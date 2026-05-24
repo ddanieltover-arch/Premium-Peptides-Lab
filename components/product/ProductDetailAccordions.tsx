@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { catalogHref } from '@/lib/data/navigation';
+import { coaLibraryHref } from '@/lib/coa/href';
 import type { ProductDetail } from '@/lib/types/catalog';
 
 type Section = {
@@ -78,20 +78,9 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
             Each manufacturing batch is released with orthogonal HPLC identity confirmation and documented
             integrator reports suitable for QA submission packages.
           </p>
-          {product.coaUrl ? (
-            <a
-              href={product.coaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex font-display text-lab-primary hover:text-white"
-            >
-              Download COA document →
-            </a>
-          ) : (
-            <a href={catalogHref('/coa')} className="inline-flex font-display text-lab-primary hover:text-white">
-              Browse COA library →
-            </a>
-          )}
+          <a href={coaLibraryHref()} className="inline-flex font-display text-lab-primary hover:text-white">
+            Download COA document →
+          </a>
         </motion.div>
       ),
     },

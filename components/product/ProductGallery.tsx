@@ -2,17 +2,16 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
-import { catalogHref } from '@/lib/data/navigation';
+import { coaLibraryHref } from '@/lib/coa/href';
 import type { ProductImage } from '@/lib/types/catalog';
 
 type Props = {
   name: string;
   images: ProductImage[];
-  coaUrl?: string;
   inStock: boolean;
 };
 
-export function ProductGallery({ name, images, coaUrl, inStock }: Props) {
+export function ProductGallery({ name, images, inStock }: Props) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
   const current = images[active] ?? images[0];
@@ -50,23 +49,12 @@ export function ProductGallery({ name, images, coaUrl, inStock }: Props) {
         >
           {inStock ? 'In stock' : 'Out of stock'}
         </span>
-        {coaUrl ? (
-          <a
-            href={coaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-4 right-4 rounded-xl border border-white/15 bg-lab-base/80 px-4 py-2.5 font-display text-xs font-semibold text-lab-primary backdrop-blur-md transition hover:bg-lab-primary/20 hover:text-white"
-          >
-            View COA →
-          </a>
-        ) : (
-          <a
-            href={catalogHref('/coa')}
-            className="absolute bottom-4 right-4 rounded-xl border border-white/15 bg-lab-base/80 px-4 py-2.5 font-display text-xs font-semibold text-slate-300 backdrop-blur-md transition hover:text-white"
-          >
-            COA library →
-          </a>
-        )}
+        <a
+          href={coaLibraryHref()}
+          className="absolute bottom-4 right-4 rounded-xl border border-white/15 bg-lab-base/80 px-4 py-2.5 font-display text-xs font-semibold text-lab-primary backdrop-blur-md transition hover:bg-lab-primary/20 hover:text-white"
+        >
+          View COA →
+        </a>
       </motion.div>
 
       {images.length > 1 && (
