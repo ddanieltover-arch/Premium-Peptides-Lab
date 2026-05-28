@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { useState } from 'react';
 import { coaLibraryHref } from '@/lib/coa/href';
 import type { ProductImage } from '@/lib/types/catalog';
 
@@ -13,8 +12,7 @@ type Props = {
 
 export function ProductGallery({ name, images, inStock }: Props) {
   const reduce = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const current = images[active] ?? images[0];
+  const current = images[0];
 
   return (
     <div className="space-y-4">
@@ -57,29 +55,6 @@ export function ProductGallery({ name, images, inStock }: Props) {
         </a>
       </motion.div>
 
-      {images.length > 1 && (
-        <motion.div
-          className="flex gap-2 overflow-x-auto pb-1"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          {images.map((img, i) => (
-            <button
-              key={img.id}
-              type="button"
-              onClick={() => setActive(i)}
-              className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border transition ${
-                i === active ? 'border-lab-primary ring-2 ring-lab-primary/30' : 'border-white/10 opacity-70 hover:opacity-100'
-              }`}
-              aria-label={`Show image ${i + 1}`}
-              aria-current={i === active}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt="" className="h-full w-full object-cover" />
-            </button>
-          ))}
-        </motion.div>
-      )}
     </div>
   );
 }

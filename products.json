@@ -1,0 +1,1172 @@
+[
+  {
+    "slug": "peptide-s",
+    "name": "Peptide-S 5mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "peptide-t-30mg",
+    "name": "Peptide-T 30mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "glp-2-t",
+    "name": "GLP-2 (T)",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "testosterone-trenbolone-400mg",
+    "name": "TESTOSTERONE TRENBOLONE (400MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "nad-plus",
+    "name": "NAD+",
+    "category_id": "03921416-554a-4aa9-9892-92bb7ba91c4a"
+  },
+  {
+    "slug": "lgd-4033-10mg-50-tablets",
+    "name": "LGD-4033 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "nad-nicotinamide-adenine-dinucleotide",
+    "name": "NAD⁺ (Nicotinamide Adenine Dinucleotide)",
+    "category_id": "03921416-554a-4aa9-9892-92bb7ba91c4a"
+  },
+  {
+    "slug": "aicar-10mg-50-tablets",
+    "name": "AICAR (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "hgh-fragment-176-191",
+    "name": "HGH Fragment 176-191",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "test-propionate-100mg",
+    "name": "TEST PROPIONATE (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "tb-500-tb4",
+    "name": "TB-500 (Tβ4)",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "ahk-cu",
+    "name": "AHK-CU",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "glutathione",
+    "name": "Glutathione",
+    "category_id": "e8fd8295-00ae-418a-9874-9d2c56dc4629"
+  },
+  {
+    "slug": "accutane-20mg-50-tablets",
+    "name": "ACCUTANE (20MG) (50 TABLETS)",
+    "category_id": "632f9176-0bbb-46a7-8830-ce721833b212"
+  },
+  {
+    "slug": "sustanon-250mg",
+    "name": "SUSTANON (250MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "acetic-acid",
+    "name": "Acetic Acid",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "t-bol-25mg-50-tablets",
+    "name": "T-BOL (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "halo-10mg-50-tablets",
+    "name": "HALO (10MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "fat-blaster-lc526",
+    "name": "Fat Blaster (LC526)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "bpc-157-tb-500-tb4",
+    "name": "BPC-157 / TB-500(Tβ4)",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "drostanolone-enanthate-200mg",
+    "name": "DROSTANOLONE ENANTHATE (200MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "glp-1-c",
+    "name": "GLP-1 (C)",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "masteron-p-100mg",
+    "name": "MASTERON P (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "cjc-1295",
+    "name": "CJC-1295",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "bpc-157-tb-500-blend",
+    "name": "BPC-157 + TB-500 5mg/5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "n-acetyl-epithalon-amidate",
+    "name": "N-Acetyl Epithalon Amidate",
+    "category_id": "e8fd8295-00ae-418a-9874-9d2c56dc4629"
+  },
+  {
+    "slug": "chonluten",
+    "name": "Chonluten",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "bacteriostatic-water-30ml",
+    "name": "Bacteriostatic Water",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "glp-1-c-s",
+    "name": "GLP-1 (C/S)",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "anavar-10mg-60-tablets",
+    "name": "ANAVAR (10MG) (60 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "epitalon",
+    "name": "Epitalon 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "test-cypionate-250mg",
+    "name": "TEST CYPIONATE (250MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "sermorlin",
+    "name": "Sermorlin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "anavar-20mg-50-tablets",
+    "name": "ANAVAR (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "n-acetyl-semx-amidate",
+    "name": "N-Acetyl Semx Amidate",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "hgh-191aa-somatropin",
+    "name": "HGH 191AA (Somatropin)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "peptide-cs",
+    "name": "Peptide-CS 5mg/5mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "peptide-su",
+    "name": "Peptide-SU 10mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "ghk-cu",
+    "name": "GHK-CU",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "prostamax",
+    "name": "Prostamax",
+    "category_id": "56338638-b39d-4fe8-9764-9589095d8ef1"
+  },
+  {
+    "slug": "cagrilintide",
+    "name": "Cagrilintide",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "peptide-31",
+    "name": "Peptide-31 25mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "testosterone-mix-300mg",
+    "name": "TESTOSTERONE MIX (300MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "peptide-c-20mg",
+    "name": "Peptide-C 20mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "masteron-enanthate-200mg",
+    "name": "MASTERON ENANTHATE (200MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "d-bol-25mg-50-tablets",
+    "name": "D-BOL (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "lc-216-lipo-b-formulation",
+    "name": "LC 216 (Lipo-B formulation)",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "semaglutide",
+    "name": "Semaglutide",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "lc-120-lipo-c-formulation",
+    "name": "LC 120 (Lipo-C formulation)",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "snap-8-10mg",
+    "name": "SNAP-8 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "selank-tp-7",
+    "name": "Selank TP-7",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "hcg",
+    "name": "HCG",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "melanotan",
+    "name": "MELANOTAN (10MG)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "test-enanthate-250mg",
+    "name": "TEST ENANTHATE (250MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "tren-a-100mg",
+    "name": "TREN A (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "aromasin-25mg-50-tablets",
+    "name": "AROMASIN (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "peptide-t-60mg",
+    "name": "Peptide-T 60mg",
+    "category_id": "5cbcef2a-953e-4850-b1df-10b079963d09"
+  },
+  {
+    "slug": "npp-150mg",
+    "name": "NPP (150MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "testosterone-enanthate-300mg",
+    "name": "TESTOSTERONE ENANTHATE (300MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "pnc-27",
+    "name": "PNC-27",
+    "category_id": "4864ea1f-6aba-455b-885a-b51a91563aaa"
+  },
+  {
+    "slug": "slu-pp-332",
+    "name": "SLU-PP-332",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "clenbuterol-100mcg-50-tablets",
+    "name": "CLENBUTEROL (100MCG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "t400-400mg",
+    "name": "T400 (400MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "testosterone-undecanoate-250mg",
+    "name": "TESTOSTERONE UNDECANOATE (250MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "n-acetyl-selank-amidate",
+    "name": "N-Acetyl Selank Amidate",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "tirzepatide",
+    "name": "Tirzepatide",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "tb500",
+    "name": "TB500 (5MG)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "kisspeptin-10",
+    "name": "Kisspeptin-10",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "peptide-31-60mg",
+    "name": "Peptide-31 60mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "anavar-25mg-50-tablets",
+    "name": "ANAVAR (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "5-amino-1mq-5mg",
+    "name": "5-Amino-1MQ 5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "ipamorelin",
+    "name": "Ipamorelin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "bpc-157-tb-500-5mg-5mg",
+    "name": "BPC-157 + TB-500 5mg/5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "klow",
+    "name": "KLOW",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "glow-plus-bpc-157-ghk-cu-tb-500-thymosin-alpha-1-blend",
+    "name": "GLOW Plus (BPC-157/GHK-Cu/TB-500/Thymosin Alpha-1 Blend)",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "kpv",
+    "name": "KPV",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "adipotide",
+    "name": "Adipotide",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "bam15",
+    "name": "BAM15",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "yk11-10mg-50-tablets",
+    "name": "YK11 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "peptide-c-10mg",
+    "name": "Peptide-C 10mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "thymogen",
+    "name": "Thymogen",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "peptide-r",
+    "name": "Peptide-R 10mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "vesugen",
+    "name": "Vesugen",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "pt-141-10mg",
+    "name": "PT-141 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "primobolan-100mg",
+    "name": "PRIMOBOLAN (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "sermorelin",
+    "name": "Sermorelin 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "mk-677-10mg-50-tablets",
+    "name": "MK-677 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "dhx-pnb-0408",
+    "name": "DHX / PNB-0408",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "peptide-m-15mg",
+    "name": "Peptide-M 15mg",
+    "category_id": "1e2b9fc5-e041-4766-a66f-b9968936a910"
+  },
+  {
+    "slug": "p-21-adamantane",
+    "name": "P-21 (Adamantane)",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "selank",
+    "name": "Selank",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "peptide-s-15mg",
+    "name": "Peptide-S 15mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "mk-2866-10mg-50-tablets",
+    "name": "MK-2866 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "dianabol-20mg-50-tablets",
+    "name": "DIANABOL (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "primo-100mg",
+    "name": "PRIMO (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "cerebrolysin",
+    "name": "Cerebrolysin",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "ibutamorin",
+    "name": "Ibutamorin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "zio-shredz-20mg-50-tablets",
+    "name": "ZIO SHREDZ (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "sermorelin-acetate",
+    "name": "Sermorelin Acetate",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "nolvadex-20mg-50-tablets",
+    "name": "NOLVADEX (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "thymosin-a1",
+    "name": "Thymosin-α1 5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "peptide-c",
+    "name": "Peptide-C 5mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "sr9009-10mg-50-tablets",
+    "name": "SR9009 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "tesmorelin",
+    "name": "Tesmorelin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "bd-luer-lok-syringe-3ml-10-pack",
+    "name": "BD LUER-LOK SYRINGE (3ML) (10-PACK)",
+    "category_id": "05b6e1fc-fae2-43da-bfd9-d90eb107465f"
+  },
+  {
+    "slug": "ovagen",
+    "name": "Ovagen",
+    "category_id": "56338638-b39d-4fe8-9764-9589095d8ef1"
+  },
+  {
+    "slug": "tudca",
+    "name": "TUDCA",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "dsip",
+    "name": "DSIP",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "tb-500-5mg",
+    "name": "TB-500",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "livagen",
+    "name": "Livagen",
+    "category_id": "e8fd8295-00ae-418a-9874-9d2c56dc4629"
+  },
+  {
+    "slug": "lipo-b",
+    "name": "LIPO-B 10ml",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "cortagen",
+    "name": "Cortagen",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "cialis-30mg-50-tablets",
+    "name": "CIALIS (30MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "peptide-m",
+    "name": "Peptide-M 10mg",
+    "category_id": "1e2b9fc5-e041-4766-a66f-b9968936a910"
+  },
+  {
+    "slug": "ara-290",
+    "name": "ARA-290",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "hmg",
+    "name": "HMG",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "melanotan-ii",
+    "name": "Melanotan-II 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "tnt-200-200mg",
+    "name": "TNT 200 (200MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "mots-c",
+    "name": "MOTS-C",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "ss-31",
+    "name": "SS-31",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "vilon",
+    "name": "Vilon",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "aicar",
+    "name": "AICAR",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "pt-141",
+    "name": "PT-141",
+    "category_id": "56338638-b39d-4fe8-9764-9589095d8ef1"
+  },
+  {
+    "slug": "mk-906-5mg-50-tablets",
+    "name": "MK-906 (5MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "superman-50mg-50-tablets",
+    "name": "SUPERMAN (50MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "ll-37",
+    "name": "LL-37",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "follistatin-315",
+    "name": "Follistatin 315",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "dsip-10mg",
+    "name": "DSIP 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "peptide-t",
+    "name": "Peptide-T 10mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "aod9604",
+    "name": "AOD9604",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "melanotan-i",
+    "name": "Melanotan-I 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "proviron-25mg-50-tablets",
+    "name": "PROVIRON (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "peg-mgf",
+    "name": "PEG-MGF",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "win-depot-50mg",
+    "name": "WIN DEPOT (50MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "teso-ns2330",
+    "name": "TESO / NS2330",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "methylene-blue",
+    "name": "Methylene Blue",
+    "category_id": "03921416-554a-4aa9-9892-92bb7ba91c4a"
+  },
+  {
+    "slug": "klow-10mg-10mg-10mg-50mg",
+    "name": "KLOW 10mg/10mg/10mg/50mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "tesamorelin",
+    "name": "Tesamorelin",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "gdf-8",
+    "name": "GDF-8",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "mt-2-melanotan-2-acetate",
+    "name": "MT-2 (Melanotan 2 Acetate)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "cjc-1295-without-dac",
+    "name": "CJC-1295 without DAC",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "primo-200mg",
+    "name": "PRIMO (200MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "retatrutide",
+    "name": "Retatrutide",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "cjc-1295-dac",
+    "name": "CJC-1295 (DAC)",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "proviron-20mg-50-tablets",
+    "name": "PROVIRON (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "anadrol-50mg-50-tablets",
+    "name": "ANADROL (50MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "foxo4-dri",
+    "name": "FOXO4-DRI",
+    "category_id": "e8fd8295-00ae-418a-9874-9d2c56dc4629"
+  },
+  {
+    "slug": "glp-3-r",
+    "name": "GLP-3 (R)",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "humanin",
+    "name": "Humanin",
+    "category_id": "03921416-554a-4aa9-9892-92bb7ba91c4a"
+  },
+  {
+    "slug": "testosterone-400-400mg",
+    "name": "TESTOSTERONE 400 (400MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "semax",
+    "name": "Semax",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "oxytocin",
+    "name": "Oxytocin",
+    "category_id": "56338638-b39d-4fe8-9764-9589095d8ef1"
+  },
+  {
+    "slug": "testosterone-propionate-100mg",
+    "name": "TESTOSTERONE PROPIONATE (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "peptide-r-50mg",
+    "name": "Peptide-R 50mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "lipo-c",
+    "name": "LIPO-C 10ml",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "glp-1-s",
+    "name": "GLP-1 (S)",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "boldenone-undecylenate-300mg",
+    "name": "BOLDENONE UNDECYLENATE (300MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "hexarelin-acetate",
+    "name": "Hexarelin Acetate",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "cjc-1295-with-dac",
+    "name": "CJC-1295 with DAC",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "reconstitution-solution-30ml",
+    "name": "Reconstitution Solution &amp;#8211; 30ml",
+    "category_id": "d87995e2-1c42-408e-a1b3-b1fb38c048b8"
+  },
+  {
+    "slug": "cjc-1295-ipamorelin",
+    "name": "CJC-1295/Ipamorelin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "winstrol-25mg-50-tablets",
+    "name": "WINSTROL (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "bpc-157-tb-500-tb4-blend",
+    "name": "BPC-157 / TB-500 (Tβ4) Blend",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "vip",
+    "name": "VIP",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "melanoten-2",
+    "name": "Melanoten-2",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "ghpr-2",
+    "name": "GHPR-2",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "cjc1295-with-dac",
+    "name": "CJC1295 WITH DAC (2MG)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "pinealon",
+    "name": "Pinealon",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "tb-500-10mg",
+    "name": "TB-500 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "cjc-ipa-no-dac",
+    "name": "CJC/IPA 5mg/5mg (No DAC)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "arimidex-1mg-50-tablets",
+    "name": "ARIMIDEX (1MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "winstrol-20mg-50-tablets",
+    "name": "WINSTROL (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "mgf",
+    "name": "MGF",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "superdrol-10mg-50-tablets",
+    "name": "SUPERDROL (10MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "gonadorelin",
+    "name": "Gonadorelin",
+    "category_id": "56338638-b39d-4fe8-9764-9589095d8ef1"
+  },
+  {
+    "slug": "clomid-50mg-50-tablets",
+    "name": "CLOMID (50MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "testosterone-cypionate-300mg",
+    "name": "TESTOSTERONE CYPIONATE (300MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "travel-cold-case",
+    "name": "Travel Cold-Case",
+    "category_id": "05b6e1fc-fae2-43da-bfd9-d90eb107465f"
+  },
+  {
+    "slug": "follistatin-344",
+    "name": "Follistatin 344",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "deca-durabolin-250mg",
+    "name": "DECA DURABOLIN (250MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "gw-501516-10mg-50-tablets",
+    "name": "GW-501516 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "acetic-acid-0-6-3ml",
+    "name": "Acetic Acid 0.6% 3ml",
+    "category_id": "d87995e2-1c42-408e-a1b3-b1fb38c048b8"
+  },
+  {
+    "slug": "nandrolone-decanoate-300mg",
+    "name": "NANDROLONE DECANOATE (300MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "semx",
+    "name": "Semx",
+    "category_id": "81424d91-30f2-491f-bf99-3336585fc32f"
+  },
+  {
+    "slug": "bpc-157-arginate-salt",
+    "name": "BPC-157 (Arginate Salt)",
+    "category_id": "e8fd8295-00ae-418a-9874-9d2c56dc4629"
+  },
+  {
+    "slug": "hgh-176-191",
+    "name": "HGH 176-191",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "5-amino-1mq-10mg",
+    "name": "5-Amino-1MQ 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "flibanserin-100mg-50-tablets",
+    "name": "FLIBANSERIN (100MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "glutathione-1200mg",
+    "name": "Glutathione 1200mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "bpc-157-tb-500",
+    "name": "BPC-157/TB-500",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "drostanolone-propionate-100mg",
+    "name": "DROSTANOLONE PROPIONATE (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "glow-10mg-70mg-10mg",
+    "name": "GLOW 10mg/70mg/10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "tren-e-200mg",
+    "name": "TREN E (200MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "mt-1",
+    "name": "MT-1",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "turinabol-20mg-50-tablets",
+    "name": "TURINABOL (20MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "hexarelin",
+    "name": "Hexarelin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "ghrp",
+    "name": "GHRP (5MG)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "nolvadex-25mg-50-tablets",
+    "name": "NOLVADEX (25MG) (50 TABLETS)",
+    "category_id": "623985fd-b2dc-400c-b9c9-9b2bfb9376a4"
+  },
+  {
+    "slug": "cjc-1295-without-dac-ipa-5mg",
+    "name": "CJC-1295 without DAC + IPA 5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "superdrol-25mg-50-tablets",
+    "name": "SUPERDROL (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "thymalin",
+    "name": "Thymalin",
+    "category_id": "e8785c02-2278-45b0-883f-d6105c4ad147"
+  },
+  {
+    "slug": "5-amino-1mq",
+    "name": "5-Amino-1MQ",
+    "category_id": "9269ce79-bc47-4d16-a087-b6b0641e8d59"
+  },
+  {
+    "slug": "npp-100mg",
+    "name": "NPP (100MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "clenbuterol-50mcg-50-tablets",
+    "name": "CLENBUTEROL (50MCG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "viagra-50mg-50-tablets",
+    "name": "VIAGRA (50MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "peptide-s-10mg",
+    "name": "Peptide-S 10mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "tb-500-tb-4",
+    "name": "TB-500 (Tβ-4)",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "portable-insulin-cooler",
+    "name": "Portable Insulin Cooler",
+    "category_id": "05b6e1fc-fae2-43da-bfd9-d90eb107465f"
+  },
+  {
+    "slug": "rad140-10mg-50-tablets",
+    "name": "RAD140 (10MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "andarine-s4-25mg-50-tablets",
+    "name": "ANDARINE S4 (25MG) (50 TABLETS)",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "glow-bpc-157-ghk-cu-tb-500-blend",
+    "name": "GLOW &amp;#8211; BPC-157/GHK-Cu/TB-500 Blend",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "free-acetic-acid-0-6-3ml",
+    "name": "Free Acetic Acid 0.6% 3ml",
+    "category_id": "d87995e2-1c42-408e-a1b3-b1fb38c048b8"
+  },
+  {
+    "slug": "glow",
+    "name": "GLOW",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "cialis-25mg-50-tablets",
+    "name": "CIALIS (25MG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "peptide-t-100mg",
+    "name": "Peptide-T 100mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "peptide-t-15mg",
+    "name": "Peptide-T 15mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "cjc-1295-dac-ipamorelin",
+    "name": "CJC-1295 (DAC)/Ipamorelin",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "ghpr-6",
+    "name": "GHPR-6",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "epitalon-50mg",
+    "name": "Epitalon 50mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "dsip-5mg",
+    "name": "DSIP 5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "tnt-400-400mg",
+    "name": "TNT 400 (400MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "bacteriostatic-water",
+    "name": "Bacteriostatic Water",
+    "category_id": "f37ca332-02c0-40b9-85bb-172d2a8cfd59"
+  },
+  {
+    "slug": "epithalon",
+    "name": "Epithalon",
+    "category_id": "e4313385-aff2-4635-b076-7671b9f21b01"
+  },
+  {
+    "slug": "aod-9604",
+    "name": "AOD-9604 5mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "thymosin-a1-10mg",
+    "name": "Thymosin-α1 10mg",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "peptide-r-20mg",
+    "name": "Peptide-R 20mg",
+    "category_id": "1c15e951-5303-460e-a466-9e24deb49c8b"
+  },
+  {
+    "slug": "insulin-syringes-10-pack",
+    "name": "Insulin Syringes (10 pack)",
+    "category_id": "05b6e1fc-fae2-43da-bfd9-d90eb107465f"
+  },
+  {
+    "slug": "t3-25mcg-50-tablets",
+    "name": "T3 (25MCG) (50 TABLETS)",
+    "category_id": "318a3190-b604-43d2-9eec-63ec8839631f"
+  },
+  {
+    "slug": "bpc-157",
+    "name": "BPC-157",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "eq-250mg",
+    "name": "EQ (250MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "igf-1-lr3",
+    "name": "IGF-1 LR3",
+    "category_id": "09992b0a-7b77-4870-b63f-b603e0ee57c2"
+  },
+  {
+    "slug": "bac-water",
+    "name": "BAC WATER",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  },
+  {
+    "slug": "trenbolone-enanthate-200mg",
+    "name": "TRENBOLONE ENANTHATE (200MG)",
+    "category_id": "1ebb9573-447b-4d7a-9b1b-23268e19faa5"
+  },
+  {
+    "slug": "tb-500",
+    "name": "TB-500 (Thymosin Beta-4 synthetic fragment)",
+    "category_id": "d7b55d7c-dfbd-44bc-8d61-31426a6fa926"
+  }
+]
