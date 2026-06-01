@@ -44,6 +44,28 @@ export default function RootLayout({
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         {children}
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prerender: [
+                {
+                  source: "document",
+                  where: {
+                    and: [
+                      { href_matches: "/*" },
+                      { not: { href_matches: "/logout" } },
+                      { not: { href_matches: "/cart" } },
+                      { not: { href_matches: "/checkout/*" } },
+                      { not: { href_matches: "/account/*" } }
+                    ]
+                  },
+                  eagerness: "moderate"
+                }
+              ]
+            })
+          }}
+        />
       </body>
     </html>
   );
