@@ -1,3 +1,4 @@
+import { isProductInStock } from '@/lib/catalog/stock';
 import { getVariantPriceBounds } from '@/lib/pricing';
 import { absoluteUrl, getSiteUrl, SITE_EMAIL, SITE_NAME } from '@/lib/seo/site';
 import type { ProductDetail } from '@/lib/types/catalog';
@@ -35,7 +36,7 @@ export function productJsonLd(product: ProductDetail): JsonLd {
   const images = product.images
     .map((img) => absoluteUrl(img.url, siteUrl))
     .filter((src) => src.startsWith('http'));
-  const inStock = product.stock > 0 || product.variants.some((v) => v.stock > 0);
+  const inStock = isProductInStock(product.stock, product.variants);
   const sku = product.variants.find((v) => v.sku)?.sku ?? product.id;
   const { min, max } = getVariantPriceBounds(product.price, product.variants);
   const hasRange = Math.abs(max - min) >= 0.005;

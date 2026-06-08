@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { WishlistButton } from '@/components/wishlist/WishlistButton';
 import { buildCategoryHref, catalogHref } from '@/lib/data/navigation';
 import type { ProductDetail, ProductVariant } from '@/lib/types/catalog';
+import { isProductInStock } from '@/lib/catalog/stock';
 import type { WishlistItem } from '@/lib/wishlist/store';
 
 type Props = {
@@ -27,7 +28,7 @@ export function ProductPurchaseModule({ product, wishlistItem, onAddToCart }: Pr
     return product.price + mod;
   }, [product.price, variant]);
 
-  const inStock = product.stock > 0 || (variant?.stock ?? 0) > 0;
+  const inStock = isProductInStock(product.stock, variant ? [variant] : product.variants);
   const formula =
     product.molecularFormula ||
     (product.casNumber ? `CAS ${product.casNumber}` : null) ||

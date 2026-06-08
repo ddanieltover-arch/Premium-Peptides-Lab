@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isProductInStock } from '@/lib/catalog/stock';
 import { getAllActiveProductsForFeed } from '@/lib/data/catalog';
 import { getPublicSiteUrl, SITE_NAME } from '@/lib/seo/site';
 import type { ProductDetail, ProductVariant } from '@/lib/types/catalog';
@@ -36,8 +37,7 @@ function productDescription(p: ProductDetail): string {
 function buildItem(site: string, p: ProductDetail, v: ProductVariant | null): string {
   const link = `${site}/products/${encodeURIComponent(p.slug)}`;
   const price = v ? p.price + v.priceModifier : p.price;
-  const stock = v ? v.stock : p.stock;
-  const availability = stock > 0 ? 'in stock' : 'out of stock';
+  const availability = isProductInStock(p.stock, v ? [v] : p.variants) ? 'in stock' : 'out of stock';
   const title = v ? `${p.name} (${v.value})` : p.name;
   const id = v ? v.sku?.trim() || `${p.id}_${v.id}` : p.id;
   const img = absUrl(site, p.images[0]?.url || p.image);

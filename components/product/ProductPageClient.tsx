@@ -20,6 +20,7 @@ import { productToRecentlyViewedItem } from '@/lib/recently-viewed/helpers';
 import { useRecentlyViewedStore } from '@/lib/recently-viewed/store';
 import type { ProductReviewSummary } from '@/lib/types/reviews';
 import { catalogHref } from '@/lib/data/navigation';
+import { isProductInStock } from '@/lib/catalog/stock';
 import { useMotionConfig } from '@/lib/motion';
 
 type Props = {
@@ -70,7 +71,7 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
     [addToCartAction, related],
   );
 
-  const inStock = product.stock > 0 || product.variants.some((v) => v.stock > 0);
+  const inStock = isProductInStock(product.stock, product.variants);
   const highlight: FeaturedProduct = {
     id: product.id,
     slug: product.slug,

@@ -247,16 +247,12 @@ async function resolveLines(
     }
 
     let unitPrice = num(p.base_price);
-    let stockAvail = p.stock;
 
     if (it.variantId) {
       const v = variants.find((x) => x.id === it.variantId);
       assert(v, 'Invalid variant selection.', 'bad_variant');
       unitPrice += num(v.price_modifier);
-      stockAvail = v.stock;
     }
-
-    assert(stockAvail >= it.quantity, 'Not enough stock for one or more items.', 'oos');
 
     if (it.unitPrice !== undefined && Number.isFinite(it.unitPrice)) {
       const drift = Math.abs(it.unitPrice - unitPrice);

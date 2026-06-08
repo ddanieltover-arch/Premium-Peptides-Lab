@@ -7,6 +7,13 @@ export type StockDisplay = {
   label: string | null;
 };
 
+export function isProductInStock(
+  baseStock: number | null | undefined,
+  variants?: { stock?: number | null }[] | null,
+): boolean {
+  return resolveProductStock(baseStock, variants).inStock;
+}
+
 export function resolveProductStock(
   baseStock: number | null | undefined,
   variants?: { stock?: number | null }[] | null,
@@ -17,7 +24,7 @@ export function resolveProductStock(
     : Math.max(0, Number(baseStock) || 0);
 
   if (total <= 0) {
-    return { total: 0, inStock: false, lowStock: false, label: 'Out of stock' };
+    return { total: 0, inStock: true, lowStock: false, label: null };
   }
   if (total <= LOW_STOCK_THRESHOLD) {
     return {
