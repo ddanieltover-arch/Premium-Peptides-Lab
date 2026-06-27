@@ -1,3 +1,4 @@
+import { COA_STORAGE_MARKER, resolveCoaDocumentUrl } from '@/lib/coa/url';
 import { createClient } from '@/lib/supabase/server';
 import type { CoaEntry } from '@/lib/types/coa';
 
@@ -8,6 +9,7 @@ export async function getCoaEntries(): Promise<CoaEntry[]> {
       .from('products')
       .select('id,name,slug,updated_at,source_url')
       .eq('is_active', true)
+      .like('source_url', `%${COA_STORAGE_MARKER}%`)
       .order('updated_at', { ascending: false })
       .limit(200);
 
@@ -29,7 +31,7 @@ export async function getCoaEntries(): Promise<CoaEntry[]> {
         method: 'HPLC / LC–MS',
         status: 'Verified',
         updatedAt: row.updated_at,
-        coaDocumentUrl: row.source_url?.trim() || null,
+        coaDocumentUrl: resolveCoaDocumentUrl(row.source_url) ?? null,
       };
     });
   } catch (e) {

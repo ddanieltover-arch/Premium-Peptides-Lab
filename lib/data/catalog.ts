@@ -1,4 +1,5 @@
 import { resolveProductStock } from '@/lib/catalog/stock';
+import { resolveCoaDocumentUrl } from '@/lib/coa/url';
 import { createClient } from '@/lib/supabase/server';
 import type { CatalogSort } from '@/lib/data/navigation';
 import { CATALOG_SORT_OPTIONS } from '@/lib/data/navigation';
@@ -47,7 +48,7 @@ function mapProduct(
 ): FeaturedProduct {
   const spec =
     row.short_desc?.trim() ||
-    (row.description ? row.description.slice(0, 72) + (row.description.length > 72 ? '…' : '') : 'Research-grade · COA on file');
+    (row.description ? row.description.slice(0, 72) + (row.description.length > 72 ? '…' : '') : 'Research-grade peptide');
 
   const base = Number(row.base_price) || 0;
   const { min, max } = getVariantPriceBoundsFromRow(row);
@@ -233,7 +234,7 @@ function mapProductDetail(row: DetailRow): ProductDetail {
     molecularWeight: row.molecular_weight ?? undefined,
     casNumber: row.cas_number ?? undefined,
     sequence: row.sequence ?? undefined,
-    coaUrl: row.source_url?.trim() || undefined,
+    coaUrl: resolveCoaDocumentUrl(row.source_url),
   };
 }
 
