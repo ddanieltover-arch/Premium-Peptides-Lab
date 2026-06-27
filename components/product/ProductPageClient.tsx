@@ -48,6 +48,11 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
     return () => window.removeEventListener('hashchange', syncHash);
   }, []);
 
+  useEffect(() => {
+    if (!coaSectionOpen) return;
+    document.getElementById('coa')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [coaSectionOpen]);
+
   const priceBounds = useMemo(
     () => getVariantPriceBounds(product.price, product.variants),
     [product.price, product.variants],

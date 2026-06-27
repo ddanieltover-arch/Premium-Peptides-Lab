@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { coaLibraryHref } from '@/lib/coa/href';
 import type { ProductImage } from '@/lib/types/catalog';
 
 type Props = {
@@ -47,14 +46,7 @@ export function ProductGallery({ name, images, inStock }: Props) {
         >
           {inStock ? 'In stock' : 'Out of stock'}
         </span>
-        <a
-          href={coaLibraryHref()}
-          className="absolute bottom-4 right-4 rounded-xl border border-white/15 bg-lab-base/80 px-4 py-2.5 font-display text-xs font-semibold text-lab-primary backdrop-blur-md transition hover:bg-lab-primary/20 hover:text-white"
-        >
-          View COA →
-        </a>
       </motion.div>
-
     </div>
   );
 }

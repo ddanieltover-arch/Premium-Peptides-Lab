@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { CoaViewerModal } from '@/components/coa/CoaViewerModal';
 import { coaLibraryHref } from '@/lib/coa/href';
 import type { ProductDetail } from '@/lib/types/catalog';
 
@@ -19,6 +20,7 @@ type Props = {
 
 export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
   const reduce = useReducedMotion();
+  const [coaOpen, setCoaOpen] = useState(false);
   const sections: Section[] = [
     {
       id: 'description',
@@ -78,9 +80,19 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
             Each manufacturing batch is released with orthogonal HPLC identity confirmation and documented
             integrator reports suitable for QA submission packages.
           </p>
-          <a href={coaLibraryHref()} className="inline-flex font-display text-lab-primary hover:text-white">
-            Download COA document →
-          </a>
+          {product.coaUrl ? (
+            <button
+              type="button"
+              onClick={() => setCoaOpen(true)}
+              className="inline-flex font-display text-lab-primary hover:text-white"
+            >
+              View COA Document
+            </button>
+          ) : (
+            <a href={coaLibraryHref()} className="inline-flex font-display text-lab-primary hover:text-white">
+              View COA library →
+            </a>
+          )}
         </motion.div>
       ),
     },
@@ -104,7 +116,8 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
   }, [defaultOpenId]);
 
   return (
-    <div className="divide-y divide-white/10 rounded-2xl border border-white/10 bg-lab-elevated/30">
+    <>
+      <div className="divide-y divide-white/10 rounded-2xl border border-white/10 bg-lab-elevated/30">
       {sections.map((section) => {
         const open = openId === section.id;
         return (
@@ -136,6 +149,16 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
           </div>
         );
       })}
-    </div>
+      </div>
+
+      {product.coaUrl ? (
+        <CoaViewerModal
+          open={coaOpen}
+          onClose={() => setCoaOpen(false)}
+          url={product.coaUrl}
+          productName={product.name}
+        />
+      ) : null}
+    </>
   );
 }
