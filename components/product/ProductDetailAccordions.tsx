@@ -1,7 +1,8 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useCoaSection } from '@/lib/coa/use-coa-section';
 import { catalogHref } from '@/lib/data/navigation';
 import Link from 'next/link';
 import type { ProductDetail } from '@/lib/types/catalog';
@@ -21,6 +22,7 @@ type Props = {
 
 export function ProductDetailAccordions({ product, defaultOpenId, onViewCoa }: Props) {
   const reduce = useReducedMotion();
+  const coaFromNav = useCoaSection(product.slug);
   const sections: Section[] = [
     {
       id: 'description',
@@ -111,19 +113,9 @@ export function ProductDetailAccordions({ product, defaultOpenId, onViewCoa }: P
 
   const [openId, setOpenId] = useState('description');
 
-  useLayoutEffect(() => {
-    const syncCoaFromHash = () => {
-      if (window.location.hash !== '#coa') return;
-      setOpenId('coa');
-      window.requestAnimationFrame(() => {
-        document.getElementById('coa')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    };
-
-    syncCoaFromHash();
-    window.addEventListener('hashchange', syncCoaFromHash);
-    return () => window.removeEventListener('hashchange', syncCoaFromHash);
-  }, [product.slug]);
+  useEffect(() => {
+    if (coaFromNav) setOpenId('coa');
+  }, [coaFromNav]);
 
   useEffect(() => {
     if (defaultOpenId) setOpenId(defaultOpenId);
