@@ -1,12 +1,6 @@
-import { LIVE_SITE_URL, SITE_EMAIL } from '@/lib/seo/site';
+import { SITE_EMAIL } from '@/lib/seo/site';
 
 export const CONTACT_CHANNELS = [
-  {
-    id: 'website',
-    title: 'Website',
-    value: 'premiumpeptideslab.online',
-    href: LIVE_SITE_URL,
-  },
   {
     id: 'email',
     title: 'Email',

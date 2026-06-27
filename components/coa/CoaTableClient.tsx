@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { coaProductHref } from '@/lib/coa/href';
+import { CoaProductLink } from '@/components/coa/CoaProductLink';
 import type { CoaEntry } from '@/lib/types/coa';
 
 const docLinkClass =
@@ -71,12 +70,12 @@ export function CoaTableClient({ entries }: Props) {
             {filtered.map((entry) => (
               <tr key={`${entry.productSlug}-${entry.batchId}`} className="transition hover:bg-white/[0.03]">
                 <td className="px-4 py-3.5 font-display text-white">
-                  <Link
-                    href={coaProductHref(entry.productSlug)}
+                  <CoaProductLink
+                    productSlug={entry.productSlug}
                     className="hover:text-lab-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lab-primary"
                   >
                     {entry.productName}
-                  </Link>
+                  </CoaProductLink>
                 </td>
                 <td className="px-4 py-3.5 font-mono text-xs text-slate-400">{entry.batchId}</td>
                 <td className="px-4 py-3.5 font-mono text-lab-mint">{entry.purity}</td>
@@ -88,9 +87,9 @@ export function CoaTableClient({ entries }: Props) {
                 </td>
                 <td className="px-4 py-3.5 text-slate-500">{formatMonthYear(entry.updatedAt)}</td>
                 <td className="px-4 py-3.5">
-                  <Link href={coaProductHref(entry.productSlug)} className={docLinkClass}>
+                  <CoaProductLink productSlug={entry.productSlug} className={docLinkClass}>
                     Open COA
-                  </Link>
+                  </CoaProductLink>
                 </td>
               </tr>
             ))}

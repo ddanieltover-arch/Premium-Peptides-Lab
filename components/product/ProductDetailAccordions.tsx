@@ -1,9 +1,9 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { CoaViewerModal } from '@/components/coa/CoaViewerModal';
-import { coaLibraryHref } from '@/lib/coa/href';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { catalogHref } from '@/lib/data/navigation';
+import Link from 'next/link';
 import type { ProductDetail } from '@/lib/types/catalog';
 
 type Section = {
@@ -16,11 +16,11 @@ type Props = {
   product: ProductDetail;
   /** When set (e.g. from `#coa`), opens the certificate section on load. */
   defaultOpenId?: string;
+  onViewCoa?: () => void;
 };
 
-export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
+export function ProductDetailAccordions({ product, defaultOpenId, onViewCoa }: Props) {
   const reduce = useReducedMotion();
-  const [coaOpen, setCoaOpen] = useState(false);
   const sections: Section[] = [
     {
       id: 'description',
@@ -83,15 +83,15 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
           {product.coaUrl ? (
             <button
               type="button"
-              onClick={() => setCoaOpen(true)}
+              onClick={() => onViewCoa?.()}
               className="inline-flex font-display text-lab-primary hover:text-white"
             >
               View COA Document
             </button>
           ) : (
-            <a href={coaLibraryHref()} className="inline-flex font-display text-lab-primary hover:text-white">
-              View COA library →
-            </a>
+            <Link href={catalogHref('/contact')} className="inline-flex font-display text-lab-primary hover:text-white">
+              Available on Request
+            </Link>
           )}
         </motion.div>
       ),
@@ -109,7 +109,21 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
     },
   ];
 
-  const [openId, setOpenId] = useState<string>(defaultOpenId ?? 'description');
+  const [openId, setOpenId] = useState('description');
+
+  useLayoutEffect(() => {
+    const syncCoaFromHash = () => {
+      if (window.location.hash !== '#coa') return;
+      setOpenId('coa');
+      window.requestAnimationFrame(() => {
+        document.getElementById('coa')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    };
+
+    syncCoaFromHash();
+    window.addEventListener('hashchange', syncCoaFromHash);
+    return () => window.removeEventListener('hashchange', syncCoaFromHash);
+  }, [product.slug]);
 
   useEffect(() => {
     if (defaultOpenId) setOpenId(defaultOpenId);
@@ -121,7 +135,7 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
       {sections.map((section) => {
         const open = openId === section.id;
         return (
-          <div key={section.id} id={section.id === 'coa' ? 'coa' : undefined}>
+          <div key={section.id} id={section.id === 'coa' ? 'coa' : undefined} className={section.id === 'coa' ? 'scroll-mt-28' : undefined}>
             <button
               type="button"
               className="flex w-full items-center justify-between px-5 py-4 text-left font-display text-sm text-white"
@@ -150,15 +164,6 @@ export function ProductDetailAccordions({ product, defaultOpenId }: Props) {
         );
       })}
       </div>
-
-      {product.coaUrl ? (
-        <CoaViewerModal
-          open={coaOpen}
-          onClose={() => setCoaOpen(false)}
-          url={product.coaUrl}
-          productName={product.name}
-        />
-      ) : null}
     </>
   );
 }

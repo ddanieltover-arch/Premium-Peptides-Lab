@@ -1,17 +1,24 @@
 'use client';
 
+import { catalogHref } from '@/lib/data/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
+import Link from 'next/link';
 import type { ProductImage } from '@/lib/types/catalog';
 
 type Props = {
   name: string;
   images: ProductImage[];
   inStock: boolean;
+  coaUrl?: string;
+  onViewCoa?: () => void;
 };
 
-export function ProductGallery({ name, images, inStock }: Props) {
+export function ProductGallery({ name, images, inStock, coaUrl, onViewCoa }: Props) {
   const reduce = useReducedMotion();
   const current = images[0];
+
+  const coaButtonClass =
+    'absolute bottom-4 right-4 z-10 rounded-xl border border-white/15 bg-lab-base/80 px-4 py-2.5 font-display text-xs font-semibold text-lab-primary backdrop-blur-md transition hover:bg-lab-primary/20 hover:text-white';
 
   return (
     <div className="space-y-4">
@@ -40,12 +47,21 @@ export function ProductGallery({ name, images, inStock }: Props) {
         </motion.div>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-lab-base/60 via-transparent to-transparent" />
         <span
-          className={`absolute left-4 top-4 rounded-full px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wide ${
+          className={`absolute left-4 top-4 z-10 rounded-full px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wide ${
             inStock ? 'border border-lab-mint/40 bg-lab-mint/15 text-lab-mint' : 'border border-lab-rose/40 bg-lab-rose/15 text-lab-rose'
           }`}
         >
           {inStock ? 'In stock' : 'Out of stock'}
         </span>
+        {coaUrl && onViewCoa ? (
+          <button type="button" onClick={onViewCoa} className={coaButtonClass}>
+            View COA →
+          </button>
+        ) : (
+          <Link href={catalogHref('/contact')} className={coaButtonClass}>
+            Available on Request
+          </Link>
+        )}
       </motion.div>
     </div>
   );

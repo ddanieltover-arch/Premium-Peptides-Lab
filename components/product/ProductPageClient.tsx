@@ -9,6 +9,7 @@ import { featuredToCartItem, productToCartItem } from '@/lib/cart/helpers';
 import { useAddToCart } from '@/lib/cart/use-add-to-cart';
 import { getVariantPriceBounds } from '@/lib/pricing';
 import { productToWishlistItem } from '@/lib/wishlist/helpers';
+import { CoaViewerModal } from '@/components/coa/CoaViewerModal';
 import { StorefrontChrome } from '@/components/layout/StorefrontChrome';
 import { ProductDetailAccordions } from '@/components/product/ProductDetailAccordions';
 import { ProductGallery } from '@/components/product/ProductGallery';
@@ -38,20 +39,8 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
   }, [product, trackRecentlyViewed]);
   const { reduce } = useMotionConfig();
   const [added, setAdded] = useState<Record<string, boolean>>({});
-  const [coaSectionOpen, setCoaSectionOpen] = useState(false);
+  const [coaViewerOpen, setCoaViewerOpen] = useState(false);
   const addToCartAction = useAddToCart();
-
-  useEffect(() => {
-    const syncHash = () => setCoaSectionOpen(window.location.hash === '#coa');
-    syncHash();
-    window.addEventListener('hashchange', syncHash);
-    return () => window.removeEventListener('hashchange', syncHash);
-  }, []);
-
-  useEffect(() => {
-    if (!coaSectionOpen) return;
-    document.getElementById('coa')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, [coaSectionOpen]);
 
   const priceBounds = useMemo(
     () => getVariantPriceBounds(product.price, product.variants),
@@ -111,7 +100,13 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
 
         <motion.div className="mx-auto grid max-w-7xl gap-10 px-4 py-8 lg:grid-cols-2 lg:items-start lg:gap-12 lg:py-12">
           <motion.div className="mx-auto w-full max-w-sm lg:max-w-md lg:justify-self-start">
-            <ProductGallery name={product.name} images={product.images} inStock={inStock} />
+            <ProductGallery
+              name={product.name}
+              images={product.images}
+              inStock={inStock}
+              coaUrl={product.coaUrl}
+              onViewCoa={() => setCoaViewerOpen(true)}
+            />
           </motion.div>
           <motion.div {...purchaseMotion}>
             <ProductPurchaseModule
@@ -123,7 +118,7 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
         </motion.div>
 
         <div className="mx-auto max-w-3xl px-4 pb-16 lg:max-w-4xl">
-          <ProductDetailAccordions product={product} defaultOpenId={coaSectionOpen ? 'coa' : undefined} />
+          <ProductDetailAccordions product={product} onViewCoa={() => setCoaViewerOpen(true)} />
         </div>
 
         <section className="border-t border-white/5 py-12">
@@ -143,6 +138,15 @@ export function ProductPageClient({ product, related, categories, reviewSummary 
 
         <RelatedProductsSection products={related} added={added} onAddToCart={handleRelatedAdd} />
       </PageEnter>
+
+      {product.coaUrl ? (
+        <CoaViewerModal
+          open={coaViewerOpen}
+          onClose={() => setCoaViewerOpen(false)}
+          url={product.coaUrl}
+          productName={product.name}
+        />
+      ) : null}
     </StorefrontChrome>
   );
 }
