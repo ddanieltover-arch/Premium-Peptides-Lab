@@ -1,12 +1,18 @@
 import type { Metadata } from 'next';
-import { absoluteUrl, getSiteUrl, SITE_DESCRIPTION, SITE_NAME } from '@/lib/seo/site';
+import { absoluteUrl, BRAND_LOGO_PATH, getSiteUrl, OG_IMAGE_PATH, SITE_DESCRIPTION, SITE_NAME } from '@/lib/seo/site';
 import type { ProductDetail } from '@/lib/types/catalog';
 
-const DEFAULT_OG_IMAGE = '/brand-logo.png';
+const OG_IMAGE_WIDTH = 1024;
+const OG_IMAGE_HEIGHT = 683;
+
+function brandOgImages(siteUrl: string) {
+  const ogImage = absoluteUrl(OG_IMAGE_PATH, siteUrl);
+  return [{ url: ogImage, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: SITE_NAME }];
+}
 
 export function buildRootMetadata(): Metadata {
   const siteUrl = getSiteUrl();
-  const ogImage = absoluteUrl(DEFAULT_OG_IMAGE, siteUrl);
+  const ogImages = brandOgImages(siteUrl);
 
   return {
     metadataBase: new URL(siteUrl),
@@ -24,6 +30,10 @@ export function buildRootMetadata(): Metadata {
     ],
     authors: [{ name: SITE_NAME, url: siteUrl }],
     creator: SITE_NAME,
+    icons: {
+      icon: [{ url: BRAND_LOGO_PATH, type: 'image/png' }],
+      apple: [{ url: BRAND_LOGO_PATH, type: 'image/png' }],
+    },
     openGraph: {
       type: 'website',
       locale: 'en_US',
@@ -31,13 +41,13 @@ export function buildRootMetadata(): Metadata {
       siteName: SITE_NAME,
       title: `${SITE_NAME} | Research-Grade Peptide Standards`,
       description: SITE_DESCRIPTION,
-      images: [{ url: ogImage, width: 512, height: 512, alt: SITE_NAME }],
+      images: ogImages,
     },
     twitter: {
       card: 'summary_large_image',
       title: `${SITE_NAME} | Research-Grade Peptide Standards`,
       description: SITE_DESCRIPTION,
-      images: [ogImage],
+      images: ogImages.map((img) => img.url),
     },
     robots: {
       index: true,
@@ -50,6 +60,7 @@ export function buildRootMetadata(): Metadata {
 
 export function buildHomeMetadata(): Metadata {
   const siteUrl = getSiteUrl();
+  const ogImages = brandOgImages(siteUrl);
   return {
     title: 'Research-Grade Peptide Standards',
     description: SITE_DESCRIPTION,
@@ -58,6 +69,13 @@ export function buildHomeMetadata(): Metadata {
       url: siteUrl,
       title: `${SITE_NAME} | Research-Grade Peptide Standards`,
       description: SITE_DESCRIPTION,
+      images: ogImages,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${SITE_NAME} | Research-Grade Peptide Standards`,
+      description: SITE_DESCRIPTION,
+      images: ogImages.map((img) => img.url),
     },
   };
 }

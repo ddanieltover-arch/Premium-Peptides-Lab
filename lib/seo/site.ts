@@ -10,6 +10,12 @@ export const SITE_DESCRIPTION =
 
 export const SITE_EMAIL = 'info@premiumpeptideslab.online';
 
+/** Primary brand mark served from `public/`. */
+export const BRAND_LOGO_PATH = '/brand-logo.png';
+
+/** Social / Open Graph preview image (brand logo). */
+export const OG_IMAGE_PATH = '/og-image.png';
+
 /** Canonical origin for metadata, sitemap, and JSON-LD. */
 export function getSiteUrl(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL;

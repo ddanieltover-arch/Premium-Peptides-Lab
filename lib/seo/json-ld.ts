@@ -1,6 +1,6 @@
 import { isProductInStock } from '@/lib/catalog/stock';
 import { getVariantPriceBounds } from '@/lib/pricing';
-import { absoluteUrl, getSiteUrl, SITE_EMAIL, SITE_NAME } from '@/lib/seo/site';
+import { absoluteUrl, BRAND_LOGO_PATH, getSiteUrl, SITE_EMAIL, SITE_NAME } from '@/lib/seo/site';
 import type { ProductDetail } from '@/lib/types/catalog';
 
 type JsonLd = Record<string, unknown>;
@@ -12,7 +12,7 @@ export function organizationJsonLd(): JsonLd {
     '@type': 'Organization',
     name: SITE_NAME,
     url: siteUrl,
-    logo: absoluteUrl('/brand-logo.png', siteUrl),
+    logo: absoluteUrl(BRAND_LOGO_PATH, siteUrl),
     email: SITE_EMAIL,
     description:
       'Supplier of research-grade peptides with HPLC release documentation and batch traceability for institutional protocols.',
